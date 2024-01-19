@@ -19,7 +19,7 @@ function StoreLocator() {
   const currentMarkerRef = useRef<HTMLDivElement>(null);
   const searchBarRef = useRef<HTMLInputElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
-
+  const incasePosition = { lat: 25, lng: 50 };
   const getPositionFromGeo = () => {
     return new Promise((resolve) => {
       navigator.geolocation.getCurrentPosition(
@@ -88,7 +88,8 @@ function StoreLocator() {
     }
 
     _marker.addListener('click', () => {
-      map.panTo(place!.geometry?.location);
+      map.panTo(place?.geometry?.location ?? incasePosition);
+
       radioRef!.current[index]!.dispatchEvent(
         new Event('click', { bubbles: true })
       );
@@ -120,14 +121,14 @@ function StoreLocator() {
       addressInfo.pop();
     }
     const address = addressInfo.join(' ') ?? '';
-    const location = place?.geometry?.location ?? '';
+    const location = place?.geometry?.location;
     const isOpen =
       place?.opening_hours?.isOpen() ?? place!.opening_hours?.open_now;
     const openingHours = place?.opening_hours?.periods![0]?.close?.time ?? '';
-    const centerLat = map.getCenter().lat();
-    const centerLon = map.getCenter().lng();
-    const storeLat = location?.lat();
-    const storeLon = location?.lng();
+    const centerLat = map?.getCenter()?.lat() ?? incasePosition.lat;
+    const centerLon = map?.getCenter()?.lng() ?? incasePosition.lng;
+    const storeLat = location?.lat() ?? incasePosition.lat;
+    const storeLon = location?.lng() ?? incasePosition.lng;
     const id = place!['place_id'];
     const dist = distance(centerLat, centerLon, storeLat, storeLon); //to miles
     const storeInfo = {
@@ -191,7 +192,7 @@ function StoreLocator() {
           if (status === google.maps.places.PlacesServiceStatus.OK && results) {
             for (let i = 0; i < results.length; i++) {
               service.getDetails(
-                { placeId: results[i]!['place_id'] },
+                { placeId: results[i]!['place_id'] ?? '' },
                 (res: any) => {
                   createStoreList(res!, map);
                   createMarker(res!, map, i);
@@ -201,7 +202,7 @@ function StoreLocator() {
             if (results[0]!.geometry!.viewport) {
               map.fitBounds(results[0]!.geometry!.viewport);
             } else {
-              map.setCenter(results[0]!.geometry!.location);
+              map.setCenter(results[0]!.geometry!.location ?? incasePosition);
               map.setZoom(17);
             }
           }
@@ -226,10 +227,13 @@ function StoreLocator() {
       ) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && results) {
           for (let i = 0; i < results.length; i++) {
-            service.getDetails({ placeId: results[i]!['place_id'] }, (res) => {
-              createStoreList(res!, map);
-              createMarker(res!, map, i);
-            });
+            service.getDetails(
+              { placeId: results[i]!['place_id'] ?? '' },
+              (res) => {
+                createStoreList(res!, map);
+                createMarker(res!, map, i);
+              }
+            );
           }
         }
       }
@@ -290,8 +294,11 @@ function StoreLocator() {
     const service = new PlacesService(map);
     searchStore(service, map);
     initAutoComplete(service, map);
+
+    console.log(map.getCenter()?.lat());
+    console.log(map.getCenter()?.lng());
   };
-  const onStoreChange = (id) => {
+  const onStoreChange = (id: string) => {
     console.log(id);
     const store = stores.find((store: any) => store.id === id);
     map!.panTo(store.location);
@@ -345,12 +352,31 @@ function StoreLocator() {
             className=" max-h-[calc(100vh-6.1876rem-70px)] snap-y snap-mandatory overflow-y-auto  max-lg:max-h-[calc(100vh-21.1876rem-70px)] "
           >
             {stores.map(
-              ({ id, title, address, dist, isOpen, openingHours }, i) => (
+              (
+                {
+                  id,
+                  title,
+                  address,
+                  dist,
+                  isOpen,
+                  openingHours,
+                }: {
+                  id: any;
+                  title: any;
+                  address: any;
+                  dist: any;
+                  isOpen: any;
+                  openingHours: any;
+                },
+                i: number
+              ) => (
                 <RadioGroup.Option
                   as={Fragment}
                   key={i}
                   value={id}
-                  ref={(el) => (radioRef.current[i] = el)}
+                  ref={(el) =>
+                    ((radioRef!.current[i] as HTMLElement | null) = el)
+                  }
                 >
                   {({ checked }) => (
                     <div
