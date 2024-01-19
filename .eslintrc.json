@@ -2,10 +2,6 @@
   "extends": "next/core-web-vitals",
   "plugins": ["unicorn"],
   "rules": {
-    "no-unused-vars": [
-      "warning",
-      { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
-    ],
     "unicorn/filename-case": [
       "error",
       {
