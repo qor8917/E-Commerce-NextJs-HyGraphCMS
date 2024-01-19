@@ -49,12 +49,13 @@ function StoreLocator() {
     clearMarkers();
     // searchStore(placeService, map);
   };
+
   const clearMarkers = () => {
     for (let i = 0; i < containerMarkers.length; i++) {
       containerMarkers[i]?.setMap(null);
     }
 
-    setStore(() => stores.filter((store) => store == false));
+    setStore(() => stores.filter((store: any) => store == false));
     setMarkers(() => markers.filter((markers) => markers == false));
   };
   const createMarker = (
