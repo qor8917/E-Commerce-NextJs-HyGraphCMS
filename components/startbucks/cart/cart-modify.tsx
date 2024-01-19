@@ -40,9 +40,15 @@ export default function CartModify({
       </div>
       <form action={removeActionWithVariant}>
         <SubmitButton type="minus" />
+        <p aria-live="polite" className="sr-only" role="status">
+          {removeState}
+        </p>
       </form>
       <form action={actionWithVariant}>
         <SubmitButton type="plus" />
+        <p aria-live="polite" className="sr-only" role="status">
+          {addState}
+        </p>
       </form>
     </div>
   );

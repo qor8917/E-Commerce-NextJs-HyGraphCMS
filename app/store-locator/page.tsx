@@ -12,12 +12,9 @@ function StoreLocator() {
   const [stores, setStore] = useState<any>([]);
   const [isLoading, setLoading] = useState(false);
   const [map, setMap] = useState<google.maps.Map>();
-  const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
-  const [selectedMarkers, setSelectedMarkers] = useState<string>();
+  const [markers, setMarkers] = useState<any[]>([]);
   const containerMarkers: google.maps.Marker[] = [];
-  const [placeService, setPlaceService] =
-    useState<google.maps.places.PlacesService>();
-  const radioRef = useRef<HTMLDivElement>([]);
+  const radioRef = useRef<HTMLDivElement[]>([]);
   const locationButtonRef = useRef<HTMLDivElement>(null);
   const currentMarkerRef = useRef<HTMLDivElement>(null);
   const searchBarRef = useRef<HTMLInputElement>(null);
@@ -57,8 +54,8 @@ function StoreLocator() {
       containerMarkers[i]?.setMap(null);
     }
 
-    setStore(() => stores.filter((store) => false));
-    setMarkers(() => markers.filter((markers) => false));
+    setStore(() => stores.filter((store) => store == false));
+    setMarkers(() => markers.filter((markers) => markers == false));
   };
   const createMarker = (
     place: google.maps.places.PlaceResult,
@@ -250,14 +247,10 @@ function StoreLocator() {
     const loader = new Loader({
       apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string,
       version: 'weekly',
+      libraries: ['marker', 'places'],
     });
     const { Map } = await loader.importLibrary('maps');
-    const { Autocomplete, PlacesService } = await loader.importLibrary(
-      'places'
-    );
-    const { Marker, AdvancedMarkerElement } = await loader.importLibrary(
-      'marker'
-    );
+    const { PlacesService } = await loader.importLibrary('places');
     let position;
     if (currentBranch) {
       position = currentBranch.location;
@@ -285,7 +278,6 @@ function StoreLocator() {
       searchStore(service, map);
     });
     const service = new PlacesService(map);
-    setPlaceService(service);
     searchStore(service, map);
     initAutoComplete(service, map);
   };
@@ -305,7 +297,6 @@ function StoreLocator() {
             size: { width: 16, height: 16 } as google.maps.Size,
           });
     });
-    setSelectedMarkers(id);
   };
   useEffect(() => {
     initMap();

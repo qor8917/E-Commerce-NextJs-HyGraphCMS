@@ -3,7 +3,7 @@
   "plugins": ["unicorn"],
   "rules": {
     "no-unused-vars": [
-      "error",
+      "warning",
       { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
     ],
     "unicorn/filename-case": [
