@@ -60,7 +60,7 @@ function StoreLocator() {
   };
   const createMarker = (
     place: google.maps.places.PlaceResult,
-    map,
+    map: google.maps.Map,
     index: number
   ) => {
     if (!place.geometry || !place.geometry.location) return;
@@ -107,7 +107,10 @@ function StoreLocator() {
     containerMarkers.push(_marker);
     setMarkers((markers) => [...markers, _marker]);
   };
-  const createStoreList = (place: google.maps.places.PlaceResult, map) => {
+  const createStoreList = (
+    place: google.maps.places.PlaceResult,
+    map: google.maps.Map
+  ) => {
     if (!place) return;
 
     const addressInfo = place!.formatted_address!.trim().split('-');
@@ -136,7 +139,7 @@ function StoreLocator() {
       id,
       location,
     };
-    setStore((stores) => [...stores, storeInfo]);
+    setStore((stores: any) => [...stores, storeInfo]);
   };
   const createHTMLMarker = (position: google.maps.LatLng) => {
     const markerOptions: google.maps.marker.AdvancedMarkerElementOptions = {
@@ -149,7 +152,10 @@ function StoreLocator() {
 
     const marker = new google.maps.marker.AdvancedMarkerElement(markerOptions);
   };
-  const initAutoComplete = (service, map) => {
+  const initAutoComplete = (
+    service: google.maps.places.PlacesService,
+    map: google.maps.Map
+  ) => {
     clearMarkers();
 
     const options = {
@@ -186,7 +192,7 @@ function StoreLocator() {
             for (let i = 0; i < results.length; i++) {
               service.getDetails(
                 { placeId: results[i]!['place_id'] },
-                (res) => {
+                (res: any) => {
                   createStoreList(res!, map);
                   createMarker(res!, map, i);
                 }
@@ -204,7 +210,10 @@ function StoreLocator() {
     });
   };
 
-  const searchStore = (service, map) => {
+  const searchStore = (
+    service: google.maps.places.PlacesService,
+    map: google.maps.Map
+  ) => {
     const request = {
       query: 'starbucks',
       location: map.getCenter(),
@@ -284,7 +293,7 @@ function StoreLocator() {
   };
   const onStoreChange = (id) => {
     console.log(id);
-    const store = stores.find((store) => store.id === id);
+    const store = stores.find((store: any) => store.id === id);
     map!.panTo(store.location);
     setCurrentBranch(store);
     markers.forEach((marker) => {
