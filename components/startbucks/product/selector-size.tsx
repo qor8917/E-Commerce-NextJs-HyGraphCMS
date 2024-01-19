@@ -21,7 +21,7 @@ export default function SizeSelector({
       onChange={(value) => {
         setSelected(value);
         const found = productSizes.find((size) => size.name === value);
-        updateOptions('size', found);
+        updateOptions('size', found as any);
       }}
     >
       {productSizes.map((size: ProductSize, i: number) => {

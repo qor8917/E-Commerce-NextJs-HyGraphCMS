@@ -7,7 +7,7 @@ import removeFromCart from '@/hygraph/cart/remove-from-cart';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
-export async function addItem(_currentState, payload) {
+export async function addItem(_currentState: any, payload: any) {
   const { product, selectedOptions } = payload;
   let cartId = cookies().get('cartId')?.value;
   let cart;
@@ -20,7 +20,7 @@ export async function addItem(_currentState, payload) {
     cookies().set('cartId', cartId);
   }
   const [size, ...rest] = selectedOptions;
-  const amount = selectedOptions.reduce((acc, option) => {
+  const amount = selectedOptions.reduce((acc: any, option: any) => {
     acc += option.price as number;
     return acc;
   }, 0);
@@ -62,15 +62,15 @@ export async function removeItem(prevState: any, lineId: string) {
   }
 }
 
-export async function updateItem(prevState: any, payload: string) {
+export async function updateItem(prevState: any, payload: any) {
   let cartId = cookies().get('cartId')?.value;
-  let cart = await getCartById(cartId);
+  let cart = await getCartById(cartId as string);
 
   const { product, selectedOptions, lineId } = payload;
   console.log(selectedOptions);
 
   const [size, ...rest] = selectedOptions;
-  const amount = selectedOptions.reduce((acc, option) => {
+  const amount = selectedOptions.reduce((acc: any, option: any) => {
     acc += option.price as number;
     return acc;
   }, 0);

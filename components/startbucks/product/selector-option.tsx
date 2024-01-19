@@ -39,7 +39,7 @@ function Select({
 }: {
   option: ProductOption;
   updateOptions: (key: string, option: Record<string, string>) => void;
-  currentOption: Record<string, string | number>;
+  currentOption: Record<string, string | number> | null;
 }) {
   const [selected, setSelected] = useState(
     currentOption?.name ?? option.children[0].name
@@ -52,7 +52,7 @@ function Select({
         onChange={(value) => {
           setSelected(value);
           const found = option.children.find((select) => select.name === value);
-          updateOptions(option.name, found);
+          updateOptions(option.name, found as any);
         }}
       >
         <Listbox.Button className="relative block w-full rounded-[0.5rem] border-[2px] border-solid p-[0.75rem]">
@@ -118,7 +118,7 @@ function Range({
 }: {
   option: ProductOption;
   updateOptions: (key: string, option: Record<string, string>) => void;
-  currentOption: Record<string, string | number>;
+  currentOption: Record<string, string | number> | null;
 }) {
   const { name, price, quantity } = option.children[0];
   const [_quantity, setQuantity] = useState(
@@ -155,7 +155,7 @@ function Range({
                     setQuantity((_quantity as number) - 1);
                   }
 
-                  updateOptions(option.name, updated);
+                  updateOptions(option.name, updated as any);
                 }
               }}
             >
@@ -194,7 +194,7 @@ function Range({
                   };
                   setQuantity((_quantity as number) + 1);
                 }
-                updateOptions(option.name, updated);
+                updateOptions(option.name, updated as any);
               }}
             >
               {quantity === 1 ? (
