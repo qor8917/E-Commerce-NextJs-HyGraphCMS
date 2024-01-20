@@ -70,7 +70,7 @@ export default async function CartPage() {
         <div className="relative ml-[40%] overflow-hidden max-lg:ml-0">
           <div className="flex flex-col gap-y-2 bg-[#F9F9F9] p-4 items-center ">
             {/* Summary */}
-            <div className="w-full flex rounded-[0.75rem] p-8 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] max-w-[80%] flex-col bg-white gap-y-2 ">
+            <div className="flex rounded-[0.75rem] p-8 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] w-[80%] max-xl:min-w-full flex-col bg-white gap-y-2 ">
               <div className="flex">
                 <div className="flex basis-[80%]">
                   <div className=" opacity-60">Subtotal</div>
@@ -107,7 +107,7 @@ export default async function CartPage() {
                 return (
                   <div
                     key={i}
-                    className="flex rounded-[0.75rem] p-4 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] min-w-[80%] bg-white "
+                    className="flex rounded-[0.75rem] p-4 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]  bg-white  w-[80%] max-xl:min-w-full"
                   >
                     <div className="relative flex h-[100px] w-[100px] shrink-0 items-center justify-center overflow-hidden rounded-[50%] max-md:h-[72px] max-md:w-[72px]">
                       <Image
@@ -131,11 +131,11 @@ export default async function CartPage() {
                     </div>
                     <div className="flex flex-col gap-y-2 px-4 max-md:gap-y-2 w-full">
                       <div className="flex w-full">
-                        <div className="basis-[80%] leading-8 max-md:text-base">
-                          <div className="text-2xl  ">
+                        <div className="basis-[80%] leading-8 ">
+                          <div className="text-2xl max-md:text-base">
                             {product && product.name}
                           </div>
-                          <div>{selectedSize.name}</div>
+                          <div className=" opacity-50">{selectedSize.name}</div>
                         </div>
                         <div className="basis-[20%]  font-semibold flex justify-end items-center">
                           ￦{selectedSize.price.toLocaleString()}
@@ -145,7 +145,7 @@ export default async function CartPage() {
                       {selectedOptions.map((options, i) => (
                         <div className="flex" key={i}>
                           <div className="flex basis-[80%]">
-                            <div>{options.name}</div>
+                            <div className=" opacity-50">{options.name}</div>
 
                             {options.price == 0 ? (
                               ''

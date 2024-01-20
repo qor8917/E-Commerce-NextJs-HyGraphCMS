@@ -1,5 +1,6 @@
 'use client';
 
+import Loading from '@/components/startbucks/loading';
 import useBranchStore from '@/store/store-branch';
 import { Loader } from '@googlemaps/js-api-loader';
 import { RadioGroup } from '@headlessui/react';
@@ -10,6 +11,8 @@ import React, { Fragment, useEffect, useRef, useState } from 'react';
 function StoreLocator() {
   const { currentBranch, setCurrentBranch } = useBranchStore();
   const [stores, setStore] = useState<any>([]);
+  const [isLoader, setIsLoader] = useState(false);
+
   const [isLoading, setLoading] = useState(false);
   const [map, setMap] = useState<google.maps.Map>();
   const [markers, setMarkers] = useState<any[]>([]);
@@ -19,7 +22,7 @@ function StoreLocator() {
   const currentMarkerRef = useRef<HTMLDivElement>(null);
   const searchBarRef = useRef<HTMLInputElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
-  const incasePosition = { lat: 25, lng: 50 };
+  const incasePosition = { lat: 25.2, lng: 55.3 };
   const getPositionFromGeo = () => {
     return new Promise((resolve) => {
       navigator.geolocation.getCurrentPosition(
@@ -29,6 +32,9 @@ function StoreLocator() {
             lng: position.coords.longitude,
           };
           resolve(pos);
+        },
+        () => {
+          resolve(incasePosition);
         }
       );
     });
@@ -46,17 +52,16 @@ function StoreLocator() {
     setLoading(false);
     createHTMLMarker(pos);
     map!.setCenter(pos);
-    clearMarkers();
-    // searchStore(placeService, map);
   };
 
   const clearMarkers = () => {
     for (let i = 0; i < containerMarkers.length; i++) {
       containerMarkers[i]?.setMap(null);
     }
-
-    setStore(() => stores.filter((store: any) => store == false));
-    setMarkers(() => markers.filter((markers) => markers == false));
+    setStore((stores: any) => stores.filter((store: any) => store == false));
+    setMarkers((markers: any) =>
+      markers.filter((markers: any) => markers == false)
+    );
   };
   const createMarker = (
     place: google.maps.places.PlaceResult,
@@ -147,7 +152,6 @@ function StoreLocator() {
       map: map,
       position: position,
       content: currentMarkerRef.current,
-      zIndex: 1000,
       title: 'currentMarker',
     };
 
@@ -157,8 +161,6 @@ function StoreLocator() {
     service: google.maps.places.PlacesService,
     map: google.maps.Map
   ) => {
-    clearMarkers();
-
     const options = {
       componentRestrictions: { country: ['kr', 'ae'] },
       fields: ['geometry', 'name'],
@@ -168,7 +170,6 @@ function StoreLocator() {
       searchBarRef.current!,
       options
     );
-    autoComplete.bindTo('bounds', map);
     autoComplete.addListener('place_changed', () => {
       const place = autoComplete.getPlace();
       if (!place.geometry || !place.geometry.location) {
@@ -179,21 +180,23 @@ function StoreLocator() {
       }
 
       const request = {
-        keyword: place.name + 'starbucks',
-        location: map.getCenter(),
+        query: place.name + 'starbucks',
+        // keyword: place.name + 'starbucks',
         rankBy: google.maps.places.RankBy.DISTANCE,
+        location: map.getCenter(),
       };
-      service.nearbySearch(
+      service.textSearch(
         request,
         (
           results: google.maps.places.PlaceResult[] | null,
           status: google.maps.places.PlacesServiceStatus
         ) => {
           if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+            clearMarkers();
             for (let i = 0; i < results.length; i++) {
               service.getDetails(
                 { placeId: results[i]!['place_id'] ?? '' },
-                (res: any) => {
+                (res) => {
                   createStoreList(res!, map);
                   createMarker(res!, map, i);
                 }
@@ -203,11 +206,37 @@ function StoreLocator() {
               map.fitBounds(results[0]!.geometry!.viewport);
             } else {
               map.setCenter(results[0]!.geometry!.location ?? incasePosition);
-              map.setZoom(17);
             }
           }
         }
       );
+      // service.nearbySearch(
+      //   request,
+      //   (
+      //     results: google.maps.places.PlaceResult[] | null,
+      //     status: google.maps.places.PlacesServiceStatus
+      //   ) => {
+      //     if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+      //       clearMarkers();
+
+      //       for (let i = 0; i < results.length; i++) {
+      //         service.getDetails(
+      //           { placeId: results[i]!['place_id'] ?? '' },
+      //           (res: any) => {
+      //             createStoreList(res!, map);
+      //             createMarker(res!, map, i);
+      //           }
+      //         );
+      //       }
+      //       if (results[0]!.geometry!.viewport) {
+      //         map.fitBounds(results[0]!.geometry!.viewport);
+      //       } else {
+      //         map.setCenter(results[0]!.geometry!.location ?? incasePosition);
+      //         map.setZoom(17);
+      //       }
+      //     }
+      //   }
+      // );
     });
   };
 
@@ -226,6 +255,8 @@ function StoreLocator() {
         status: google.maps.places.PlacesServiceStatus
       ) => {
         if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+          clearMarkers();
+
           for (let i = 0; i < results.length; i++) {
             service.getDetails(
               { placeId: results[i]!['place_id'] ?? '' },
@@ -282,24 +313,23 @@ function StoreLocator() {
       rotateControl: true,
       zoomControl: false,
       disableDoubleClickZoom: true,
+      gestureHandling: 'greedy',
     };
 
     const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
     setMap(map);
     map.setCenter(position);
     map.addListener('dragend', () => {
-      clearMarkers();
       searchStore(service, map);
     });
     const service = new PlacesService(map);
     searchStore(service, map);
     initAutoComplete(service, map);
-
-    console.log(map.getCenter()?.lat());
-    console.log(map.getCenter()?.lng());
+    setTimeout(() => {
+      setIsLoader(true);
+    }, 1000);
   };
   const onStoreChange = (id: string) => {
-    console.log(id);
     const store = stores.find((store: any) => store.id === id);
     map!.panTo(store.location);
     setCurrentBranch(store);
@@ -445,17 +475,27 @@ function StoreLocator() {
       </div>
       {/* 지도영역 */}
       <div className="relative order-2 h-[calc(100vh-6.1876rem)]  basis-[60%] max-lg:order-1 max-lg:min-h-[15rem] max-lg:w-full z-10">
-        <div className="absolute left-0 top-0 h-full w-full" ref={mapRef}>
-          {/* 현재위치 마커 */}
-          <div
-            ref={currentMarkerRef}
-            className="relative flex items-center justify-center "
-          >
-            <div className="absolute h-4 w-4 animate-ping rounded-[50%] bg-blue-600 opacity-50 ring-2"></div>
-            <div className="h-3 w-3 rounded-[50%] bg-blue-600 ring-2"></div>
-          </div>
+        <div
+          className={`absolute origin-left-right h-full w-full z-50 ${
+            isLoader ? 'hidden' : ''
+          }`}
+        >
+          <Loading />
         </div>
-
+        <div
+          className="absolute left-0 top-0 h-full w-full -z-0"
+          ref={mapRef}
+        ></div>
+        {/* 현재위치 마커 */}
+        <div
+          ref={currentMarkerRef}
+          className={`absolute flex items-center justify-center -z-10 left-[50%] top-[50%] ${
+            isLoader ? '' : 'hidden'
+          }`}
+        >
+          <div className="absolute h-4 w-4 animate-ping rounded-[50%] bg-blue-600 opacity-50 ring-2"></div>
+          <div className="h-3 w-3 rounded-[50%] bg-blue-600 ring-2"></div>
+        </div>
         {/* 줌인 줌아웃 버튼 */}
         <div className="absolute bottom-[5rem] right-[1.5rem] z-40 flex flex-col bg-white shadow">
           <div>

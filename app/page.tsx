@@ -218,7 +218,7 @@ export default function Main() {
         {/* 푸터 */}
         <Footer />
       </div>
-      <div className="fixed bottom-12 right-10">
+      <div className="fixed bottom-12 right-4 lg:right-10">
         <ButtonOrder />
       </div>
     </div>
