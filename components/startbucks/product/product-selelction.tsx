@@ -3,6 +3,7 @@
 import useProductStore from '@/store/store-product';
 import { Product, ProductOption } from '@/types/types';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import ButtonAddToCart from '../cart/button-add-to-cart';
 import ButtonUpdateToCart from '../cart/button-update-to-cart';
@@ -105,7 +106,10 @@ export default function ProductSelection({ product }: { product: Product }) {
             );
           })}
           <div className="py-4">
-            <button className="flex items-center justify-center gap-x-2 rounded-[31.25rem] bg-[#1E3932] px-[1.5rem] py-[1rem] shadow">
+            <Link
+              href={'/app/not-found.tsx'}
+              className="flex items-center justify-center gap-x-2 rounded-[31.25rem] bg-[#1E3932] px-[1.5rem] py-[1rem] shadow"
+            >
               <Image
                 alt="plus_green"
                 src="/customize.svg"
@@ -113,7 +117,7 @@ export default function ProductSelection({ product }: { product: Product }) {
                 height={24}
               />
               <span className="text-xl font-[600] text-white">Customize</span>
-            </button>
+            </Link>
           </div>
         </div>
         <div className="shrink-1 "></div>

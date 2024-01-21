@@ -27,7 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/not-found.js",
+    "app/not-found.tsx",
     "app/error.tsx"
   ],
   "exclude": ["node_modules"]
