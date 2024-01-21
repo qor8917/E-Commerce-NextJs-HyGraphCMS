@@ -107,7 +107,7 @@ export default function ProductSelection({ product }: { product: Product }) {
           })}
           <div className="py-4">
             <Link
-              href={'/app/not-found.tsx'}
+              href={'/customize'}
               className="flex items-center justify-center gap-x-2 rounded-[31.25rem] bg-[#1E3932] px-[1.5rem] py-[1rem] shadow"
             >
               <Image

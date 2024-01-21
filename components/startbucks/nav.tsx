@@ -25,13 +25,13 @@ export default function Nav() {
             </Link>
             <Link
               className="block pr-[1.5rem] hover:text-seagreen"
-              href="/app/not-found.tsx"
+              href="/cards"
             >
               CARDS
             </Link>
             <Link
               className="block pr-[1.5rem] hover:text-seagreen"
-              href="/app/not-found.tsx"
+              href="/gift"
             >
               GIFT
             </Link>
