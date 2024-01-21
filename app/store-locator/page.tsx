@@ -317,13 +317,13 @@ function StoreLocator() {
     };
     const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
     setMap(map);
+    map.setCenter(incasePosition);
     map.addListener('dragend', () => {
       searchStore(service, map);
     });
     const service = new PlacesService(map);
     searchStore(service, map);
     initAutoComplete(service, map);
-    map.setCenter(incasePosition);
 
     setTimeout(() => {
       if (currentBranch) {
