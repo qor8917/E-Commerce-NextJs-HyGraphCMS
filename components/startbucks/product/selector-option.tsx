@@ -124,6 +124,7 @@ function Range({
   const [_quantity, setQuantity] = useState(
     currentOption?.quantity ?? quantity
   );
+
   return (
     <div className="py-4">
       <div className="relative block w-full rounded-[0.5rem] border-[2px] border-solid p-[0.75rem]">
@@ -131,11 +132,9 @@ function Range({
           <div>{name}</div>
           <div className="flex gap-x-2">
             <button
-              className={
-                currentOption?.quantity ?? quantity === 1 ? 'hidden' : 'static'
-              }
+              className={_quantity == 1 ? 'hidden' : 'static'}
               onClick={() => {
-                if (currentOption?.quantity ?? quantity === 1) {
+                if (_quantity === 1) {
                   return null;
                 } else {
                   let updated;
@@ -179,7 +178,6 @@ function Range({
 
             <button
               onClick={() => {
-                // setQuantity(_quantity + 1);
                 let updated;
                 if (currentOption) {
                   updated = {

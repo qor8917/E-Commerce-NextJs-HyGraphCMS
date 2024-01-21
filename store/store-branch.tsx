@@ -6,6 +6,8 @@ interface State {
   setCurrentBranch: (product: any) => void;
   branchId: string | null;
   setBranchId: (id: string) => void;
+  loaderInstance: any;
+  setLoader: (loader: any) => void;
 }
 
 const useBranchStore = create<State>()(
@@ -19,6 +21,10 @@ const useBranchStore = create<State>()(
     branchId: null,
     setBranchId: (id: string) => {
       set(() => ({ lineId: id }));
+    },
+    loaderInstance: null,
+    setLoader: (loader: any) => {
+      set(() => ({ loaderInstance: loader }));
     },
   }))
 );

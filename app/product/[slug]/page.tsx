@@ -18,15 +18,18 @@ export default async function ProductPage({
         <TopMenu />
         {/* 상품 이미지 및 타이틀 */}
         <div className=" flex gap-x-8 bg-[#1F3933] px-32 text-white max-xl:px-12 max-lg:flex-col max-lg:items-center max-lg:justify-center max-lg:px-5 max-lg:pb-8  ">
-          <div className="max-lg:shrink-1 shrink-0 basis-[33%] max-lg:basis-[100%] ">
-            <Image
-              alt={(product.images && images[0]?.fileName) ?? '이미지없음'}
-              src={(product.images && images[0]?.url) ?? '/drink_loading.png'}
-              width={300}
-              height={300}
-              placeholder="blur"
-              blurDataURL="/drink_loading.png"
-            />
+          <div className="relative max-lg:shrink-1 shrink-0 basis-[33%] max-lg:basis-[100%]  p-4">
+            <div className=" w-[300px] h-[300px]  overflow-hidden rounded-[50%] flex justify-center items-center">
+              <Image
+                alt={(product.images && images[0]?.fileName) ?? '이미지없음'}
+                src={(product.images && images[0]?.url) ?? '/drink_loading.png'}
+                width={300}
+                height={300}
+                sizes=""
+                placeholder="blur"
+                blurDataURL="/drink_loading.png"
+              />
+            </div>
           </div>
           <div className="flex basis-[66%] flex-col items-start justify-center gap-y-4 max-lg:basis-[100%] max-lg:items-center">
             <div className=" tex text-[2.25rem] font-bold leading-[2.9025rem]">

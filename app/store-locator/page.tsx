@@ -22,7 +22,7 @@ function StoreLocator() {
   const currentMarkerRef = useRef<HTMLDivElement>(null);
   const searchBarRef = useRef<HTMLInputElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
-  const incasePosition = { lat: 25.2, lng: 55.3 };
+  const incasePosition = { lat: 25.19, lng: 55.28 };
   const getPositionFromGeo = () => {
     return new Promise((resolve) => {
       navigator.geolocation.getCurrentPosition(
@@ -115,7 +115,8 @@ function StoreLocator() {
   };
   const createStoreList = (
     place: google.maps.places.PlaceResult,
-    map: google.maps.Map
+    map: google.maps.Map,
+    i: number
   ) => {
     if (!place) return;
 
@@ -146,6 +147,10 @@ function StoreLocator() {
       location,
     };
     setStore((stores: any) => [...stores, storeInfo]);
+    if (i == 0)
+      radioRef?.current[0]?.dispatchEvent(
+        new Event('click', { bubbles: true })
+      );
   };
   const createHTMLMarker = (position: google.maps.LatLng) => {
     const markerOptions: google.maps.marker.AdvancedMarkerElementOptions = {
@@ -197,7 +202,7 @@ function StoreLocator() {
               service.getDetails(
                 { placeId: results[i]!['place_id'] ?? '' },
                 (res) => {
-                  createStoreList(res!, map);
+                  createStoreList(res!, map, i);
                   createMarker(res!, map, i);
                 }
               );
@@ -261,7 +266,7 @@ function StoreLocator() {
             service.getDetails(
               { placeId: results[i]!['place_id'] ?? '' },
               (res) => {
-                createStoreList(res!, map);
+                createStoreList(res!, map, i);
                 createMarker(res!, map, i);
               }
             );
@@ -289,6 +294,7 @@ function StoreLocator() {
   };
   const initMap = async () => {
     console.log('init Map');
+
     const loader = new Loader({
       apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string,
       version: 'weekly',
@@ -296,14 +302,8 @@ function StoreLocator() {
     });
     const { Map } = await loader.importLibrary('maps');
     const { PlacesService } = await loader.importLibrary('places');
-    let position;
-    if (currentBranch) {
-      position = currentBranch.location;
-    } else {
-      position = (await getPositionFromGeo()) as google.maps.LatLng;
-    }
+
     const mapOptions: google.maps.MapOptions = {
-      center: position,
       zoom: 15,
       mapId: 'd6ba8c8b99db42e0',
       streetViewControl: false,
@@ -315,17 +315,20 @@ function StoreLocator() {
       disableDoubleClickZoom: true,
       gestureHandling: 'greedy',
     };
-
     const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
     setMap(map);
-    map.setCenter(position);
     map.addListener('dragend', () => {
       searchStore(service, map);
     });
     const service = new PlacesService(map);
     searchStore(service, map);
     initAutoComplete(service, map);
+    map.setCenter(incasePosition);
+
     setTimeout(() => {
+      if (currentBranch) {
+        map.setCenter(currentBranch.location);
+      }
       setIsLoader(true);
     }, 1000);
   };
