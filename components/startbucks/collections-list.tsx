@@ -28,7 +28,7 @@ export default function CollectionsList({
             return (
               <Link
                 key={i}
-                href={{ pathname: `menu/${slug}` }}
+                href={`/menu/${slug}`}
                 className="flex basis-1/2 cursor-pointer items-center gap-4 text-xl max-md:basis-full"
               >
                 <div className=" overflow-hidden rounded-[50%] max-md:h-[74px] max-md:w-[74px]">

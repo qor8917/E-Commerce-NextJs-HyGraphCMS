@@ -34,7 +34,7 @@ export default function Collections({
                 return (
                   <DynamicTag
                     key={i}
-                    href={{ pathname: `menu/${slug}` }}
+                    href={`/menu/${slug}`}
                     className="text-base leading-6 tracking-normal text-black text-opacity-60"
                   >
                     {name}

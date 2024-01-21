@@ -18,7 +18,7 @@ export default async function DrinkPage({ children }: { children: ReactNode }) {
             </div>
             <div className="flex h-px shrink-0 flex-col border-b border-solid border-b-[color:var(--app-starbucks-com-black-87,rgba(0,0,0,0.87))]" />
           </div>
-          <div className="my-auto cursor-pointer self-center text-sm leading-5 tracking-normal text-black text-opacity-90">
+          {/* <div className="my-auto cursor-pointer self-center text-sm leading-5 tracking-normal text-black text-opacity-90">
             Featured
           </div>
           <div className="my-auto cursor-pointer self-center text-sm leading-5 tracking-normal text-black text-opacity-90">
@@ -26,7 +26,7 @@ export default async function DrinkPage({ children }: { children: ReactNode }) {
           </div>
           <div className="my-auto grow cursor-pointer self-center whitespace-nowrap text-sm leading-5 tracking-normal text-black text-opacity-90">
             Favorites
-          </div>
+          </div> */}
         </div>
       </div>
       {/* 컨텐츠 */}
