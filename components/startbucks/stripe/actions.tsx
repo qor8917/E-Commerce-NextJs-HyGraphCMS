@@ -24,7 +24,7 @@ export async function retrieveOrder(
         };
       }),
       mode: 'payment',
-      success_url: `http://localhost:3000/cart/success`,
+      success_url: `http://localhost:3000/order`,
       cancel_url: `http://localhost:3000/cart`,
     })) as Stripe.Checkout.Session;
     //주문한 내역(상품,이메일,stripe checkout ID, 총금액, 총수량) 저장
