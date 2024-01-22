@@ -1,27 +1,14 @@
-import CartModify from '@/components/startbucks/cart/cart-modify';
+import CartList from '@/components/startbucks/cart/cart-list';
 import FloorDrawerStore from '@/components/startbucks/floor-drawer-store';
 import Footer from '@/components/startbucks/footer';
-import Loading from '@/components/startbucks/loading';
 import ContinueModal from '@/components/startbucks/modal-continue';
-import getCartById from '@/hygraph/cart/get-cart';
-import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
 export default async function CartPage() {
-  const cartId = cookies().get('cartId')?.value;
-  const cart = await getCartById(cartId!);
-  const subtotalAmount = cart.cartLines.reduce(
-    (acc, line) => (acc += line.cost.amount),
-    0
-  );
-  const totalTaxAmount = subtotalAmount * 0.1;
-  const totalAmount = subtotalAmount + totalTaxAmount;
-
   return (
     <div className="relative z-0 bg-white font-sodo-sans leading-snug text-black lg:pt-[6.1876rem] pt-[5rem]">
       {/* 타이틀 */}
-      <div className="fixed bottom-0 left-0 top-0 z-0 flex min-w-[40%]  flex-col items-start justify-between bg-[#1E3932] px-10 pt-[99px] text-white max-lg:relative max-lg:justify-start max-lg:px-4 max-lg:py-2">
+      <div className="fixed bottom-0 left-0 top-0 z-0 flex min-w-[40%]  flex-col items-start justify-between bg-[#1E3932] px-10 pt-[99px] text-white max-lg:relative max-lg:justify-start max-lg:px-4 max-lg:py-2 max-lg:min-w-full">
         <Link href="/menu" className="flex items-center justify-start gap-x-2 ">
           <span>
             <Image
@@ -66,41 +53,10 @@ export default async function CartPage() {
         <div className="py-4"></div>
       </div>
       {/* 콘텐츠 */}
-      <Suspense fallback={<Loading />}>
-        <div className="relative ml-[40%] overflow-hidden max-lg:ml-0">
-          <div className="flex flex-col gap-y-2 bg-[#F9F9F9] p-4 items-center ">
-            {/* Summary */}
-            <div className="flex rounded-[0.75rem] p-8 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] w-[80%] max-xl:min-w-full flex-col bg-white gap-y-2 ">
-              <div className="flex">
-                <div className="flex basis-[80%]">
-                  <div className=" opacity-60">Subtotal</div>
-                  <div className="underline-offset-2 flex-grow border-dotted border-b-2 border-gray-100 border-"></div>
-                </div>
-                <div className="basis-[20%] font-semibold flex justify-end items-center">
-                  ￦{subtotalAmount.toLocaleString()}
-                </div>
-              </div>
-              <div className="flex">
-                <div className="flex basis-[80%]">
-                  <div className=" opacity-60">Tax</div>
-                  <div className="underline-offset-2 flex-grow border-dotted border-b-2 border-gray-100 border-"></div>
-                </div>
-                <div className="basis-[20%] font-semibold flex justify-end items-center">
-                  ￦{totalTaxAmount.toLocaleString()}
-                </div>
-              </div>
-              <div className="flex text-2xl font-bold">
-                <div className="flex basis-[80%]">
-                  <div>Total</div>
-                  <div className="underline-offset-2 flex-grow border-dotted border-b-2 border-gray-100 border-"></div>
-                </div>
-                <div className="basis-[20%] font-semibold flex justify-end items-center">
-                  ￦{totalAmount.toLocaleString()}
-                </div>
-              </div>
-            </div>
-            {/* 카트에 담긴 물품들 */}
-            {cart &&
+      <div className="relative ml-[40%] overflow-hidden max-lg:ml-0">
+        <div className="flex flex-col gap-y-2 bg-[#F9F9F9] p-4 items-center ">
+          {/* 카트에 담긴 물품들 */}
+          {/* {cart &&
               cart?.cartLines.reverse().map(({ merchandise, id }, i) => {
                 const { product, selectedOptions, selectedSize } = merchandise;
                 const cobinedOptions = [...[selectedSize], ...selectedOptions];
@@ -145,7 +101,13 @@ export default async function CartPage() {
                       {selectedOptions.map((options, i) => (
                         <div className="flex" key={i}>
                           <div className="flex basis-[80%]">
-                            <div className=" opacity-50">{options.name}</div>
+                            {options.name == 'Shots' ? (
+                              <div className=" opacity-50">
+                                {options.name} x {options.quantity}
+                              </div>
+                            ) : (
+                              <div className=" opacity-50">{options.name}</div>
+                            )}
 
                             {options.price == 0 ? (
                               ''
@@ -172,15 +134,15 @@ export default async function CartPage() {
                     </div>
                   </div>
                 );
-              })}
-          </div>
-
-          {/* 푸터 */}
-          <Footer />
-          {/* 컨티뉴 모달창 */}
-          <ContinueModal />
+              })} */}
+          <CartList />
         </div>
-      </Suspense>
+
+        {/* 푸터 */}
+        <Footer />
+        {/* 컨티뉴 모달창 */}
+        <ContinueModal />
+      </div>
     </div>
   );
 }

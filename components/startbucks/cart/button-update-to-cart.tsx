@@ -1,9 +1,9 @@
 'use client';
+import useCartStore from '@/store/store-cart';
 import { Product } from '@/types/types';
 import { Transition } from '@headlessui/react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
-import { updateItem } from './actions';
 
 export default function ButtonUpdateToCart({
   product,
@@ -19,8 +19,8 @@ export default function ButtonUpdateToCart({
   }, []);
   const [active, setActive] = useState(false);
   const payload = { product, selectedOptions: options, lineId };
-  const [addItemState, addItemFortState] = useFormState(updateItem, null);
-  const addItemFortStateWithVariants = addItemFortState.bind(null, payload);
+  // const [addItemState, addItemFortState] = useFormState(updateItem, null);
+  // const addItemFortStateWithVariants = addItemFortState.bind(null, payload);
 
   return (
     <Transition
@@ -32,36 +32,62 @@ export default function ButtonUpdateToCart({
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <form action={addItemFortStateWithVariants} className="block">
-        <SubmitButton />
-        <p aria-live="polite" className="sr-only" role="status">
+      <div className="block">
+        {/* <form action={addItemFortStateWithVariants} className="block"> */}
+
+        <SubmitButton payload={payload} />
+        {/* <p aria-live="polite" className="sr-only" role="status">
           {addItemState}
-        </p>
-      </form>
+        </p> */}
+      </div>
     </Transition>
   );
 }
-function SubmitButton() {
-  const { pending } = useFormStatus();
+function SubmitButton({ payload }: { payload: any }) {
+  // const { pending } = useFormStatus();
+  const route = useRouter();
 
+  const { currentCart, updateCurrentCartItem } = useCartStore();
   return (
     <div
-      className={`inline-flex translate-y-6  items-center justify-center rounded-full  px-6 py-4 shadow bg-emerald-700 
-       
-      `}
+      className={`inline-flex translate-y-6  items-center justify-center rounded-full  px-6 py-4 shadow bg-emerald-700`}
     >
       <div
         className={`text-lg h-6 w-32 cursor-pointer text-center font-sodo-sans font-semibold leading-snug tracking-wider text-white flex items-center justify-center`}
       >
-        <button className={`text-white inline-block`} disabled={pending}>
-          {pending ? (
+        <button
+          onClick={() => {
+            const { product, selectedOptions, lineId } = payload;
+
+            const [size, ...rest] = selectedOptions;
+            const amount = selectedOptions.reduce((acc: any, option: any) => {
+              acc += option.price as number;
+              return acc;
+            }, 0);
+            const line = {
+              id: lineId,
+              quantity: 1,
+              cost: { amount: amount, currencyCode: 'krw' },
+              merchandise: {
+                selectedOptions: rest,
+                selectedSize: size,
+                product: product,
+              },
+            };
+            updateCurrentCartItem(line);
+            route.push('/cart');
+          }}
+          className={`text-white inline-block`}
+          // disabled={pending}
+        >
+          {/* {pending ? (
             <span
               className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent  motion-reduce:animate-[spin_1.5s_linear_infinite] mt-2"
               role="status"
             ></span>
-          ) : (
-            <span>Update item</span>
-          )}
+          ) : ( */}
+          <span>Update item</span>
+          {/* )} */}
         </button>
       </div>
     </div>

@@ -47,7 +47,6 @@ export default function ProductSelection({ product }: { product: Product }) {
 
     return () => {
       setCurrentOption(null);
-      console.log(currentOption);
     };
   }, [product]);
   const variant = useMemo(() => {

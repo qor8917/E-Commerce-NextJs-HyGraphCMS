@@ -5,7 +5,7 @@ import useBranchStore from '@/store/store-branch';
 import { Loader } from '@googlemaps/js-api-loader';
 import { RadioGroup } from '@headlessui/react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { Fragment, useEffect, useRef, useState } from 'react';
 
 function StoreLocator() {
@@ -23,6 +23,7 @@ function StoreLocator() {
   const searchBarRef = useRef<HTMLInputElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
   const incasePosition = { lat: 25.19, lng: 55.28 };
+  const route = useRouter();
   const getPositionFromGeo = () => {
     return new Promise((resolve) => {
       navigator.geolocation.getCurrentPosition(
@@ -293,8 +294,6 @@ function StoreLocator() {
     return deg * (Math.PI / 180);
   };
   const initMap = async () => {
-    console.log('init Map');
-
     const loader = new Loader({
       apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY as string,
       version: 'weekly',
@@ -451,22 +450,21 @@ function StoreLocator() {
                             height={24}
                           />
                         </div>
-                        <Link
-                          href={{
-                            pathname: '/menu',
-                            query: {
-                              // path: '/menu/hotcoffees'
-                            },
+                        <button
+                          className={`${
+                            checked ? 'visible' : 'invisible'
+                          } block rounded-[3.125rem] bg-seagreen px-[1rem] py-[0.5rem] text-sm text-white hover:opacity-90 `}
+                          onClick={() => {
+                            const store = stores.find(
+                              (store: any) => store.id === id
+                            );
+
+                            setCurrentBranch(store);
+                            route.push('/menu');
                           }}
                         >
-                          <button
-                            className={`${
-                              checked ? 'visible' : 'invisible'
-                            } block rounded-[3.125rem] bg-seagreen px-[1rem] py-[0.5rem] text-sm text-white hover:opacity-90 `}
-                          >
-                            Order Here
-                          </button>
-                        </Link>
+                          Order Here
+                        </button>
                       </div>
                     </div>
                   )}

@@ -14,11 +14,11 @@ const useActionStore = create<State>()(
     handleIsOpen: (active: boolean) => {
       set((state: any) => {
         state.isOpen = active;
-        // setTimeout(() => {
-        //   set((state) => {
-        //     state.isOpen = false;
-        //   });
-        // }, 2000);
+        setTimeout(() => {
+          set((state) => {
+            state.isOpen = false;
+          });
+        }, 1500);
       });
     },
     isCalling: false,
@@ -29,7 +29,7 @@ const useActionStore = create<State>()(
           set((state) => {
             state.isCalling = false;
           });
-        }, 2000);
+        }, 1000);
       });
     },
   }))

@@ -1,7 +1,7 @@
-import { Cart } from '@/types/types';
+import { Cart, CartItem } from '@/types/types';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { parse } from 'graphql';
-import { CartFragment } from '../graphql-fragments';
+import { CartFragment, LinesFragment } from '../graphql-fragments';
 import hygraph, { gql } from '../hygraph-mutation-client';
 
 const createCartMutation: TypedDocumentNode<
@@ -27,15 +27,23 @@ const publishCartMutation: TypedDocumentNode<
   }
   ${CartFragment}
 `);
-
-async function createCart(): Promise<Cart> {
-  const { createCart } = await hygraph.request(createCartMutation, {
-    data: {
-      checkoutUrl: null,
-      totalQuantity: 0,
-      cartLines: {},
-      cost: {},
-    },
+const publishLineMutation: TypedDocumentNode<
+  { publishCartLine: CartItem },
+  Record<string, any>
+> = parse(gql`
+  mutation PublishCartLine($id: ID!) {
+    publishCartLine(where: { id: $id }, to: PUBLISHED) {
+      ...LinesFragment
+    }
+  }
+  ${LinesFragment}
+`);
+async function createCart(variables?: any): Promise<Cart> {
+  const { createCart } = await hygraph.request(createCartMutation, variables);
+  createCart.cartLines.forEach(async (line, index) => {
+    await hygraph.request(publishLineMutation, {
+      id: createCart.cartLines[index].id,
+    });
   });
 
   const { publishCart } = await hygraph.request(publishCartMutation, {

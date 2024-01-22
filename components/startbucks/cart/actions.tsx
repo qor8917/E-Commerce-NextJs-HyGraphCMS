@@ -30,7 +30,7 @@ export async function addItem(_currentState: any, payload: any) {
       create: [
         {
           quantity: 1,
-          cost: { create: { amount: amount, currencyCode: 'USD' } },
+          cost: { create: { amount: amount, currencyCode: 'krw' } },
           merchandise: {
             create: {
               selectedOptions: {
@@ -67,7 +67,6 @@ export async function updateItem(prevState: any, payload: any) {
   let cart = await getCartById(cartId as string);
 
   const { product, selectedOptions, lineId } = payload;
-  console.log(selectedOptions);
 
   const [size, ...rest] = selectedOptions;
   const amount = selectedOptions.reduce((acc: any, option: any) => {
@@ -81,7 +80,7 @@ export async function updateItem(prevState: any, payload: any) {
       create: [
         {
           quantity: 1,
-          cost: { create: { amount: amount, currencyCode: 'USD' } },
+          cost: { create: { amount: amount, currencyCode: 'krw' } },
           merchandise: {
             create: {
               selectedOptions: {

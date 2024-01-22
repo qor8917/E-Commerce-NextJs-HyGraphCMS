@@ -1,11 +1,11 @@
 'use client';
 import useActionStore from '@/store/store-action';
+import useCartStore from '@/store/store-cart';
 import useProductStore from '@/store/store-product';
 import { Product } from '@/types/types';
 import { Transition } from '@headlessui/react';
 import { useEffect, useState } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
-import { addItem } from './actions';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function ButtonAddToCart({
   product,
@@ -17,15 +17,13 @@ export default function ButtonAddToCart({
   useEffect(() => {
     setActive(true);
     setCurrentProduct(product);
-    console.log('새러');
   }, []);
-
   const [active, setActive] = useState(false);
   const { setCurrentProduct } = useProductStore();
 
   const payload = { product, selectedOptions: options };
-  const [addItemState, addItemFortState] = useFormState(addItem, null);
-  const addItemFortStateWithVariants = addItemFortState.bind(null, payload);
+  // const [addItemState, addItemFortState] = useFormState(addItem, null);
+  // const addItemFortStateWithVariants = addItemFortState.bind(null, payload);
 
   return (
     <Transition
@@ -37,38 +35,61 @@ export default function ButtonAddToCart({
       leaveFrom="opacity-100"
       leaveTo="opacity-0"
     >
-      <form action={addItemFortStateWithVariants} className="block">
-        <SubmitButton />
-        <p aria-live="polite" className="sr-only" role="status">
+      {/* <form action={addItemFortStateWithVariants} className="block"> */}
+      <div className="block">
+        <SubmitButton payload={payload} />
+        {/* <p aria-live="polite" className="sr-only" role="status">
           {addItemState}
-        </p>
-      </form>
+        </p> */}
+      </div>
     </Transition>
   );
 }
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  const { handleIsOpen } = useActionStore();
+function SubmitButton({ payload }: { payload: any }) {
+  const { isOpen, handleIsOpen } = useActionStore();
+  const { addCurrentCartItem } = useCartStore();
+  const addNewItem = () => {
+    const { product, selectedOptions } = payload;
+
+    const [size, ...rest] = selectedOptions;
+    console.log(rest);
+    const amount = selectedOptions.reduce((acc: any, option: any) => {
+      acc += option.price as number;
+      return acc;
+    }, 0);
+    const line = {
+      id: uuidv4(),
+      quantity: 1,
+      cost: { amount: amount, currencyCode: 'krw' },
+      merchandise: {
+        selectedOptions: rest,
+        selectedSize: size,
+        product: product,
+      },
+    };
+    addCurrentCartItem(line);
+  };
   useEffect(() => {
-    handleIsOpen(pending);
-  }, [pending]);
+    handleIsOpen(false);
+  }, []);
   return (
     <div
-      className={`inline-flex translate-y-6  items-center justify-center rounded-full  px-6 py-4 shadow bg-emerald-700 ${
-        pending ? 'invisible' : 'visible'
-      }`}
+      className={`inline-flex translate-y-6  items-center justify-center rounded-full  px-6 py-4 shadow bg-emerald-700 
+        visible
+      `}
     >
       <div
         className={`text-lg h-6 w-32 cursor-pointer text-center font-sodo-sans font-semibold leading-snug tracking-wider text-white flex items-center justify-center  `}
       >
         <button
           className={`text-white inline-block`}
-          disabled={pending}
+          disabled={isOpen}
           onClick={() => {
             handleIsOpen(true);
+            addNewItem();
           }}
         >
-          {pending ? (
+          {isOpen ? (
             <span
               className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent  motion-reduce:animate-[spin_1.5s_linear_infinite] mt-2"
               role="status"

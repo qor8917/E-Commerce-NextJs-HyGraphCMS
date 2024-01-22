@@ -1,20 +1,60 @@
 'use client';
+import useStore from '@/store';
+import useCartStore from '@/store/store-cart';
 import { Dialog, Transition } from '@headlessui/react';
+import { loadStripe } from '@stripe/stripe-js';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
+import { retrieveOrder } from './stripe/actions';
 
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY_TEST as string
+);
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type="submit"
+      role="link"
+      disabled={pending}
+      className="text-lg w-30 fixed bottom-12 right-10 flex  h-8 cursor-pointer items-center justify-center rounded-full bg-emerald-700 px-6 py-8 text-center  font-semibold leading-snug  tracking-wider text-white shadow max-md:right-4 "
+    >
+      {pending ? (
+        <div
+          className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent  motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        ></div>
+      ) : (
+        <div> Continue</div>
+      )}
+    </button>
+  );
+}
 export default function ContinueModal() {
+  const currentCart = useStore(useCartStore, (state) => state.currentCart);
+
+  const payload = { lines: currentCart! };
   const [active, setActive] = useState(false);
-  const openContinue = () => setActive(true);
   const closeContinue = () => setActive(false);
   const [isShow, setIsShow] = useState(false);
-
+  const [state, FormState] = useFormState(retrieveOrder, null);
+  const actionWithVariant = FormState.bind(null, payload);
   useEffect(() => {
     if (!isShow) {
       setIsShow(true);
     }
   }, [isShow]);
+  useMemo(async () => {
+    if (!state?.session) return;
+    const stripe = await stripePromise;
+    await stripe!.redirectToCheckout({
+      sessionId: state!.session!.id,
+    });
+  }, [state]);
+
   return (
     <Transition
       show={isShow}
@@ -26,12 +66,13 @@ export default function ContinueModal() {
       leaveTo="opacity-0"
     >
       <>
-        <button
-          onClick={openContinue}
-          className="text-lg w-30 fixed bottom-12 right-10 flex  h-8 cursor-pointer items-center justify-center rounded-full bg-emerald-700 px-6 py-8 text-center font-sodo-sans font-semibold leading-snug  tracking-wider text-white shadow max-md:right-4 "
-        >
-          Countinue
-        </button>
+        <form action={actionWithVariant}>
+          <SubmitButton />
+          <p aria-live="polite" className="sr-only" role="status">
+            {/* {state} */}
+          </p>
+        </form>
+
         <Transition show={active}>
           <Dialog onClose={closeContinue} as="div" className="relative z-10">
             <Transition.Child
@@ -63,10 +104,16 @@ export default function ContinueModal() {
                     To place an order, you&apos;ll need to be a Starbucks®
                     Rewards member
                   </div>
-                  <Link href="/register" className="text-2xl text-seagreen">
+                  <Link
+                    href="/account/create"
+                    className="text-2xl text-seagreen"
+                  >
                     Join now
                   </Link>
-                  <Link href="/login" className="text-2xl text-seagreen">
+                  <Link
+                    href="/account/signin"
+                    className="text-2xl text-seagreen"
+                  >
                     Sign in
                   </Link>
                 </div>

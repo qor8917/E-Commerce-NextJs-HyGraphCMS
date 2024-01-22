@@ -1,6 +1,8 @@
 'use client';
 
+import useStore from '@/store';
 import useActionStore from '@/store/store-action';
+import useCartStore from '@/store/store-cart';
 import useProductStore from '@/store/store-product';
 import { Transition } from '@headlessui/react';
 import Image from 'next/image';
@@ -8,8 +10,22 @@ import Image from 'next/image';
 export default function FloorDrawerCart() {
   const { currentProduct } = useProductStore();
   const { isOpen } = useActionStore();
+  const currentCart = useStore(useCartStore, (state) => state.currentCart);
+
   return (
     <>
+      <div className="absolute  left-[50%] top-[55%] z-20 -translate-x-1/2  -translate-y-1/2 font-bold ">
+        <div>{currentCart?.length ?? 0}</div>
+      </div>
+      <div className="relative">
+        <Image
+          src="/bag.svg"
+          alt="bag"
+          width={32}
+          height={32}
+          className="flex items-center justify-center"
+        />
+      </div>
       {currentProduct?.images && (
         <Transition
           show={isOpen}

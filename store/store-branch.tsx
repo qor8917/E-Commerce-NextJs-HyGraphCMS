@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 
 interface State {
@@ -11,22 +12,25 @@ interface State {
 }
 
 const useBranchStore = create<State>()(
-  immer((set) => ({
-    currentBranch: null,
-    setCurrentBranch: (product: any) => {
-      set(() => ({
-        currentBranch: product,
-      }));
-    },
-    branchId: null,
-    setBranchId: (id: string) => {
-      set(() => ({ lineId: id }));
-    },
-    loaderInstance: null,
-    setLoader: (loader: any) => {
-      set(() => ({ loaderInstance: loader }));
-    },
-  }))
+  persist(
+    immer((set) => ({
+      currentBranch: null,
+      setCurrentBranch: (product: any) => {
+        set(() => ({
+          currentBranch: product,
+        }));
+      },
+      branchId: null,
+      setBranchId: (id: string) => {
+        set(() => ({ lineId: id }));
+      },
+      loaderInstance: null,
+      setLoader: (loader: any) => {
+        set(() => ({ loaderInstance: loader }));
+      },
+    })),
+    { name: 'branch-storage' }
+  )
 );
 
 export default useBranchStore;

@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       animation: {
-        progress: 'progress 2s infinite linear',
+        progress: 'progress 1s infinite linear',
       },
       keyframes: {
         progress: {

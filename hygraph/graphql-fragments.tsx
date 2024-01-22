@@ -33,7 +33,8 @@ export const ProductFragment = gql`
 export const CartFragment = gql`
   fragment CartFragment on Cart {
     id
-    checkoutUrl
+    stripeCheckoutId
+    email
     totalQuantity
     cost {
       subtotalAmount {

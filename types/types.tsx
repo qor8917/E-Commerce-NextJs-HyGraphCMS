@@ -17,7 +17,8 @@ export type Collection = {
 
 export type Cart = {
   id: string;
-  checkoutUrl: string;
+  stripeCheckoutId: string;
+  email: string;
   cost: {
     subtotalAmount: Money;
     totalTaxAmount: Money;
@@ -44,50 +45,6 @@ export type CartItem = {
     }[];
     selectedSize: ProductSize;
     product: Product;
-  };
-};
-export type CreateCartOperation = {
-  data: { cartCreate: { cart: Cart } };
-};
-
-export type AddToCartOperation = {
-  data: {
-    cartLinesAdd: {
-      cart: Cart;
-    };
-  };
-  variables: {
-    cartId: string;
-    lines: {
-      merchandiseId: string;
-      quantity: number;
-    }[];
-  };
-};
-export type RemoveFromCartOperation = {
-  data: {
-    cartLinesRemove: {
-      cart: Cart;
-    };
-  };
-  variables: {
-    cartId: string;
-    lineIds: string[];
-  };
-};
-export type UpdateCartOperation = {
-  data: {
-    cartLinesUpdate: {
-      cart: Cart;
-    };
-  };
-  variables: {
-    cartId: string;
-    lines: {
-      id: string;
-      merchandiseId: string;
-      quantity: number;
-    }[];
   };
 };
 
