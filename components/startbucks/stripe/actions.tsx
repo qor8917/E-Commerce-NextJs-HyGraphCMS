@@ -3,7 +3,6 @@
 import createCart from '@/hygraph/cart/create-cart';
 import stripeClient from '@/hygraph/stripe-client';
 import { CartItem } from '@/types/types';
-import Stripe from 'stripe';
 
 export async function retrieveOrder(
   _currentState: any,
@@ -11,7 +10,7 @@ export async function retrieveOrder(
 ) {
   const { lines } = payload;
   try {
-    const session = (await stripeClient.checkout.sessions.create({
+    const session = await stripeClient.checkout.sessions.create({
       line_items: lines.map((line) => {
         const { name, images } = line.merchandise.product;
         return {
@@ -24,9 +23,9 @@ export async function retrieveOrder(
         };
       }),
       mode: 'payment',
-      success_url: `${window.location.origin}/order`,
-      cancel_url: `${window.location.origin}/cart`,
-    })) as Stripe.Checkout.Session;
+      success_url: 'https://starbucksdubai.vercel.app/order',
+      cancel_url: 'https://starbucksdubai.vercel.app/cart',
+    });
     //주문한 내역(상품,이메일,stripe checkout ID, 총금액, 총수량) 저장
     const subtotalAmount = lines?.reduce(
       (acc, line) => (acc += line.cost.amount),
