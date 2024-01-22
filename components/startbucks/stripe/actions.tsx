@@ -11,8 +11,6 @@ export async function retrieveOrder(
 ) {
   const { lines } = payload;
   try {
-    console.log('주문들어감');
-
     const session = (await stripeClient.checkout.sessions.create({
       line_items: lines.map((line) => {
         const { name, images } = line.merchandise.product;
@@ -29,7 +27,6 @@ export async function retrieveOrder(
       success_url: `http://localhost:3000/cart/success`,
       cancel_url: `http://localhost:3000/cart`,
     })) as Stripe.Checkout.Session;
-    console.log('상품저장');
     //주문한 내역(상품,이메일,stripe checkout ID, 총금액, 총수량) 저장
     const subtotalAmount = lines?.reduce(
       (acc, line) => (acc += line.cost.amount),

@@ -51,7 +51,6 @@ export default function ProductSelection({ product }: { product: Product }) {
   }, [product]);
   const variant = useMemo(() => {
     const selectedOptions = Object.values(options).map((option) => option);
-    console.log(selectedOptions);
     return selectedOptions;
   }, [options]);
 

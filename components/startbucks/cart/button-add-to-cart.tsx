@@ -52,7 +52,6 @@ function SubmitButton({ payload }: { payload: any }) {
     const { product, selectedOptions } = payload;
 
     const [size, ...rest] = selectedOptions;
-    console.log(rest);
     const amount = selectedOptions.reduce((acc: any, option: any) => {
       acc += option.price as number;
       return acc;
