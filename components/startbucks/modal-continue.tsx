@@ -50,6 +50,7 @@ export default function ContinueModal() {
   useMemo(async () => {
     if (!state?.session) return;
     const stripe = await stripePromise;
+
     await stripe!.redirectToCheckout({
       sessionId: state!.session!.id,
     });
