@@ -1,6 +1,5 @@
 import ButtonOrder from '@/components/startbucks/button-order';
 import Footer from '@/components/startbucks/footer';
-import Test from '@/worker/test';
 import Image from 'next/image';
 import Link from 'next/link';
 
