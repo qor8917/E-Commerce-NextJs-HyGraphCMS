@@ -35,7 +35,7 @@ const config: Config = {
         lightcyan: '#d4e9e2',
       },
       fontFamily: {
-        'sodo-sans': "'SoDo Sans'",
+        sans: ['var(--font-SoDo)'],
       },
     },
     screens: {

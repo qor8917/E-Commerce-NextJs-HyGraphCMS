@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function Nav() {
   return (
     <>
-      <div className=" fixed origin-left-right top-0 w-full z-10 flex h-[5rem]  items-center justify-between bg-white px-4 lg:h-[6.1876rem] lg:px-10  lg:shadow">
+      <div className=" fixed origin-left-right top-0 w-full z-10 flex h-[5rem]  items-center justify-between bg-white px-4 lg:h-[6.1876rem] lg:px-10  lg:shadow font-bold ">
         <div className="flex items-center ">
           <div className="mr-10 h-[3.1875rem] w-[3.1875rem] max-md:h-[2.5rem] max-md:w-[2.5rem]">
             <Link href="/" className="relative block h-full w-full">
@@ -16,7 +16,7 @@ export default function Nav() {
               />
             </Link>
           </div>
-          <div className="line line l text- flex  text-sm font-bold leading-snug tracking-widest max-md:hidden">
+          <div className="flex  text-sm font-bold leading-snug tracking-widest max-md:hidden">
             <Link
               className="block  pr-[1.5rem]  hover:text-seagreen"
               href="/menu"

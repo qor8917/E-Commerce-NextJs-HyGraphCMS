@@ -2,11 +2,9 @@ import Loading from '@/components/startbucks/loading';
 import Nav from '@/components/startbucks/nav';
 import { RouteChangeListener } from '@/components/startbucks/rotute-change-listener';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import { Suspense } from 'react';
+import { soDoFont } from './fonts';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -19,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.className}>
-      <body className="flex flex-col leading font-sodo-sans selection:bg-teal-300 relative">
+    <html lang="en" className={soDoFont.className}>
+      <body className="flex flex-col leading selection:bg-seagreen relative">
         <Suspense fallback={<Loading />}>
           <RouteChangeListener />
           <Nav />
