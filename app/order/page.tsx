@@ -1,7 +1,7 @@
-import CartList from '@/components/startbucks/cart/cart-list';
 import FloorDrawerStore from '@/components/startbucks/floor-drawer-store';
 import Footer from '@/components/startbucks/footer';
-import Stepper from '@/components/startbucks/order-steper';
+import OrderList from '@/components/startbucks/order/order-list';
+import Stepper from '@/components/startbucks/order/order-steper';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -73,7 +73,7 @@ export default function Order() {
           </div>
           <Stepper />
           <div className="bg-[#F9F9F9] w-full flex justify-center flex-col items-center gap-y-4 p-4">
-            <CartList />
+            <OrderList />
           </div>
 
           {/* 푸터 */}

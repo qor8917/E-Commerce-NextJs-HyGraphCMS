@@ -7,8 +7,9 @@ interface State {
   addCurrentCartItem: (line: CartItem) => void;
   removeCurrentCartItem: (id: string) => void;
   updateCurrentCartItem: (line: CartItem) => void;
+  reset: () => void;
 }
-
+const initialState: CartItem[] = [];
 const useCartStore = create<State>()(
   persist(
     (set, get) => ({
@@ -26,6 +27,9 @@ const useCartStore = create<State>()(
       updateCurrentCartItem: (line: CartItem) => {
         get().removeCurrentCartItem(line.id);
         get().addCurrentCartItem(line);
+      },
+      reset: () => {
+        // set(() => ({ currentCart: [...initialState] }));
       },
     }),
     {

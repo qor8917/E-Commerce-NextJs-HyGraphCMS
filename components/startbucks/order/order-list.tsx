@@ -1,21 +1,27 @@
 'use client';
-
-import useStore from '@/store';
-import useCartStore from '@/store/store-cart';
+import getOrderById from '@/hygraph/cart/get-order';
+import { Cart } from '@/types/types';
 import Image from 'next/image';
-import { useEffect } from 'react';
-import CartModify from './cart-modify';
-export default function CartList() {
-  const currentCart = useStore(useCartStore, (state) => state.currentCart);
-  const subtotalAmount = currentCart?.reduce(
-    (acc, line) => (acc += line.cost.amount),
-    0
-  );
-  const totalTaxAmount = subtotalAmount! * 0.1;
-  const totalAmount = subtotalAmount! + totalTaxAmount;
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import CartModify from '../cart/cart-modify';
+export default function OrderList() {
+  const searchParams = useSearchParams();
+
+  const id = searchParams.get('id');
+  // const [loading, setLoading] = useState(true);
+  const [order, setOrder] = useState<Cart>();
+
   useEffect(() => {
-    useCartStore.persist.clearStorage();
-  }, []);
+    const fetchOrder = async () => {
+      const ordered = await getOrderById(id as string);
+      console.log(ordered);
+      setOrder(ordered);
+    };
+
+    if (id) fetchOrder();
+  }, [id]);
+
   return (
     <>
       {/* Summary */}
@@ -26,7 +32,7 @@ export default function CartList() {
             <div className="underline-offset-2 flex-grow border-dotted border-b-2 border-gray-100 border-"></div>
           </div>
           <div className="basis-[20%] font-semibold flex justify-end items-center">
-            ￦{subtotalAmount?.toLocaleString()}
+            ￦{order?.cost?.subtotalAmount.amount?.toLocaleString()}
           </div>
         </div>
         <div className="flex">
@@ -35,7 +41,7 @@ export default function CartList() {
             <div className="underline-offset-2 flex-grow border-dotted border-b-2 border-gray-100 border-"></div>
           </div>
           <div className="basis-[20%] font-semibold flex justify-end items-center">
-            ￦{totalTaxAmount.toLocaleString()}
+            ￦{order?.cost?.totalTaxAmount.amount.toLocaleString()}
           </div>
         </div>
         <div className="flex text-2xl font-bold">
@@ -44,12 +50,12 @@ export default function CartList() {
             <div className="underline-offset-2 flex-grow border-dotted border-b-2 border-gray-100 border-"></div>
           </div>
           <div className="basis-[20%] font-semibold flex justify-end items-center">
-            ￦{totalAmount.toLocaleString()}
+            ￦{order?.cost?.totalAmount.amount.toLocaleString()}
           </div>
         </div>
       </div>
-      {currentCart ? (
-        currentCart.reverse().map(({ merchandise, id }, i) => {
+      {order?.cartLines ? (
+        order?.cartLines.reverse().map(({ merchandise, id }, i) => {
           const { product, selectedOptions, selectedSize } = merchandise;
           const cobinedOptions = [...[selectedSize], ...selectedOptions];
           return (

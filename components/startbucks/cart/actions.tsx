@@ -2,7 +2,7 @@
 import { TAGS } from '@/hygraph';
 import addToCart from '@/hygraph/cart/add-to-cart';
 import createCart from '@/hygraph/cart/create-cart';
-import getCartById from '@/hygraph/cart/get-cart';
+import getCartById from '@/hygraph/cart/get-order';
 import removeFromCart from '@/hygraph/cart/remove-from-cart';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';

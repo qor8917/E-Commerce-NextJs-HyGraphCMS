@@ -23,8 +23,7 @@ export async function retrieveOrder(
         };
       }),
       mode: 'payment',
-      success_url:
-        'https://starbucksdubai.vercel.app/order?id={CHECKOUT_SESSION_ID}',
+      success_url: 'http://localhost:3000/order?id={CHECKOUT_SESSION_ID}',
       cancel_url: 'https://starbucksdubai.vercel.app/cart',
     });
     //주문한 내역(상품,이메일,stripe checkout ID, 총금액, 총수량) 저장
