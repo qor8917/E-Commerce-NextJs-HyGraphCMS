@@ -1,7 +1,6 @@
 'use client';
 import useStore from '@/store';
 import useCartStore from '@/store/store-cart';
-import getURL from '@/utils/utils';
 import { Dialog, Transition } from '@headlessui/react';
 import { loadStripe } from '@stripe/stripe-js';
 import Image from 'next/image';
@@ -37,7 +36,10 @@ function SubmitButton() {
 export default function ContinueModal() {
   const currentCart = useStore(useCartStore, (state) => state.currentCart);
 
-  const payload = { lines: currentCart!, url: getURL('') };
+  const payload = {
+    lines: currentCart!,
+    url: process.env.NEXT_PUBLIC_SITE_URL!,
+  };
   const [active, setActive] = useState(false);
   const closeContinue = () => setActive(false);
   const [isShow, setIsShow] = useState(false);
