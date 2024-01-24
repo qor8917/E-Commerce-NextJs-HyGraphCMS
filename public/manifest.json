@@ -1,15 +1,12 @@
 {
-  "name": "PWA App",
-  "short_name": "App",
+  "name": "Starbucks",
+  "short_name": "Starbucks",
+  "start_url": "/",
+  "display": "standalone",
   "icons": [
     {
       "src": "/logo_starbucks.svg",
       "sizes": "any"
     }
-  ],
-  "theme_color": "#FFFFFF",
-  "background_color": "#FFFFFF",
-  "start_url": "/",
-  "display": "standalone",
-  "orientation": "portrait"
+  ]
 }
