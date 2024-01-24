@@ -35,7 +35,6 @@ function SubmitButton() {
   );
 }
 export default function ContinueModal() {
-  console.log(window.location.origin);
   const currentCart = useStore(useCartStore, (state) => state.currentCart);
 
   const payload = { lines: currentCart!, url: getURL('') };
