@@ -5,7 +5,7 @@ import stripeClient from '@/hygraph/stripe-client';
 import { CartItem } from '@/types/types';
 export async function retrieveOrder(
   _currentState: any,
-  payload: { lines: CartItem[] }
+  payload: { lines: CartItem[]; url: string }
 ) {
   const { lines, url } = payload;
   try {
