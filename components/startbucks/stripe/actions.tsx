@@ -8,6 +8,7 @@ export async function retrieveOrder(
   payload: { lines: CartItem[]; url: string }
 ) {
   const { lines, url } = payload;
+  console.log(url);
   try {
     const session = await stripeClient.checkout.sessions.create({
       line_items: lines.map((line) => {
