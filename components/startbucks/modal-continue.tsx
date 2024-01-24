@@ -36,7 +36,7 @@ function SubmitButton() {
 export default function ContinueModal() {
   const currentCart = useStore(useCartStore, (state) => state.currentCart);
 
-  const payload = { lines: currentCart! };
+  const payload = { lines: currentCart!, url: window.location.origin };
   const [active, setActive] = useState(false);
   const closeContinue = () => setActive(false);
   const [isShow, setIsShow] = useState(false);

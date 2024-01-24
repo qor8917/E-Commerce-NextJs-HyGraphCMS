@@ -2,6 +2,7 @@ import FloorDrawerStore from '@/components/startbucks/floor-drawer-store';
 import Footer from '@/components/startbucks/footer';
 import OrderList from '@/components/startbucks/order/order-list';
 import Stepper from '@/components/startbucks/order/order-steper';
+import ServiceWorker from '@/components/startbucks/worker';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -56,6 +57,7 @@ export default function Order() {
       {/* 콘텐츠 */}
       <div className="relative ml-[40%] overflow-hidden max-lg:ml-0  ">
         <div className="flex justify-center flex-col items-center gap-y-4">
+          <ServiceWorker />
           <div className="w-[80%] max-xl:min-w-full pt-4">
             <div className="p-4 flex flex-col gap-y-2">
               <div className="text-seagreen text-xl">
@@ -75,12 +77,9 @@ export default function Order() {
           <div className="bg-[#F9F9F9] w-full flex justify-center flex-col items-center gap-y-4 p-4">
             <OrderList />
           </div>
-
           {/* 푸터 */}
         </div>
         <Footer />
-
-        {/* 컨티뉴 모달창 */}
       </div>
     </div>
   );
