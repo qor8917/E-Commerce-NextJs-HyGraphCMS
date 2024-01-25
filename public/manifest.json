@@ -1,12 +1,35 @@
 {
+  "id": "Starbucks 1.0",
   "name": "Starbucks",
   "short_name": "Starbucks",
-  "start_url": "/",
-  "display": "standalone",
   "icons": [
     {
-      "src": "/logo_starbucks.svg",
-      "sizes": "any"
+      "src": "/icons/apple-icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icons/apple-icon-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "display": "standalone",
+  "screenshots": [
+    {
+      "src": "/icons/screenshot2.webp",
+      "type": "image/webp",
+      "sizes": "1920x977",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/icons/screenshot2.webp",
+      "type": "image/webp",
+      "sizes": "1920x977",
+      "form_factor": "wide"
     }
   ]
 }
