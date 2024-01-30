@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 export default function ButtonSignOut() {
   const route = useRouter();
   const { data: session, status } = useSession();
-  console.log(session, status);
   return (
     <>
       {status == 'unauthenticated' ? (

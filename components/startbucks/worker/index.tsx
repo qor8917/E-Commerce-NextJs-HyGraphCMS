@@ -42,23 +42,6 @@ export default function ServiceWorker() {
       }
     }
   }
-  function askNotificationPermission() {
-    console.log('권한 묻기');
-    // 권한을 실제로 요구하는 함수
-
-    // 브라우저가 알림을 지원하는지 확인
-    if (!('Notification' in window)) {
-      console.log('이 브라우저는 알림을 지원하지 않습니다.');
-    } else {
-      Notification.requestPermission().then((permission) => {
-        if (Notification.permission !== 'denied') {
-          alert('알람을 허용하고 진행사항을 알람 받으세요');
-        } else {
-          alert('알람을 허용했습니다.');
-        }
-      });
-    }
-  }
 
   useEffect(() => {
     async function setUpServiceWorker() {

@@ -4,7 +4,6 @@ const sw = /** @type {ServiceWorkerGlobalScope & typeof globalThis} */ (
 sw.addEventListener('push', (event) => {
   const massege = event.data?.json();
   const { title, body, icon, image } = massege;
-  console.log('Received message: ', massege);
   async function handlePushEvent() {
     const windowClients = await sw.clients.matchAll({ type: 'window' });
     if (windowClients.length > 0) {

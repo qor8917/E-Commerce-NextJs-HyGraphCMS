@@ -13,7 +13,6 @@ export async function POST(req: Request) {
       { status: 400 }
     );
   }
-  // console.log('Received push subscription to add: ', subscription);
 
   webPush.sendNotification(
     subscription,
