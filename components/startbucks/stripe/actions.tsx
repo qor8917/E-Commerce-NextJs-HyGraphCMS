@@ -1,9 +1,9 @@
 'use server';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import createCart from '@/hygraph/cart/create-cart';
 import stripeClient from '@/hygraph/stripe-client';
 import { CartItem } from '@/types/types';
+import { authOptions } from '@/utils/utils';
 import { getServerSession } from 'next-auth';
 export async function retrieveOrder(
   _currentState: any,
@@ -11,7 +11,6 @@ export async function retrieveOrder(
 ) {
   const UserSession = await getServerSession(authOptions);
   const { lines, url } = payload;
-  console.log(UserSession);
   try {
     if (!UserSession) return { status: false, session: null };
     const session = await stripeClient.checkout.sessions.create({
