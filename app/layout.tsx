@@ -10,7 +10,7 @@ import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL as string),
-  title: 'Starbucks Dubai',
+  title: 'Starbucks Clone Dubai',
   description: 'Starbucks Site clone by Seong',
   robots: {
     follow: true,
