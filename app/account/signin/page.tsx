@@ -164,24 +164,31 @@ export default function SignInPage() {
               <div>Forgot your password?</div>
             </div>
             <div className=" self-end pt-8">
-              <button
-                className="rounded-[31.25rem] bg-seagreen px-6 py-4 font-[600] leading-6 text-white shadow"
-                onClick={async (e) => {
-                  e.preventDefault();
-                  if (!(isEmail && isPassword)) {
-                    setErrorWindow(true);
-                    return;
-                  }
-                  const a = await signIn('credentials', {
-                    ...data,
-                    redirect: false,
-                    callbackUrl: callBackUrl[0],
-                  });
-                  route.push(a?.url as string);
-                }}
-              >
-                Sign in
-              </button>
+              {status === 'loading' ? (
+                <div
+                  className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent  motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                  role="status"
+                ></div>
+              ) : (
+                <button
+                  className="rounded-[31.25rem] bg-seagreen px-6 py-4 font-[600] leading-6 text-white shadow"
+                  onClick={async (e) => {
+                    e.preventDefault();
+                    if (!(isEmail && isPassword)) {
+                      setErrorWindow(true);
+                      return;
+                    }
+                    const a = await signIn('credentials', {
+                      ...data,
+                      redirect: false,
+                      callbackUrl: callBackUrl[0],
+                    });
+                    route.push(a?.url as string);
+                  }}
+                >
+                  Sign in
+                </button>
+              )}
             </div>
           </form>
         </div>

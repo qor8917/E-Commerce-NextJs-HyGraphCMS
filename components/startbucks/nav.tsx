@@ -64,12 +64,9 @@ export default async function Nav() {
             </div>
             <div className="ml-12 flex items-center">
               <ButtonSignOut />
-              <Link
-                href="/account/create"
-                className="ml-4 block rounded-[3.125rem] border border-solid bg-black px-4 py-2 text-center text-white hover:bg-gray-500"
-              >
+              <button className="ml-4 block rounded-[3.125rem] border border-solid bg-black px-4 py-2 text-center text-white hover:bg-gray-500">
                 Join Now
-              </Link>
+              </button>
             </div>
           </div>
         </div>
