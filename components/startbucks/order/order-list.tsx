@@ -15,7 +15,6 @@ export default function OrderList() {
   useEffect(() => {
     const fetchOrder = async () => {
       const ordered = await getOrderById(id as string);
-      console.log(ordered);
       setOrder(ordered);
     };
 

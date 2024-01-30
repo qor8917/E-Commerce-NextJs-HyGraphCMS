@@ -14,7 +14,7 @@ export default function CartList() {
   const totalTaxAmount = subtotalAmount! * 0.1;
   const totalAmount = subtotalAmount! + totalTaxAmount;
   useEffect(() => {
-    useCartStore.persist.clearStorage();
+    // useCartStore.persist.clearStorage();
   }, []);
   return (
     <>

@@ -1,14 +1,17 @@
 'use client';
 
 import useActionStore from '@/store/store-action';
+import useBranchStore from '@/store/store-branch';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 export function RouteChangeListener() {
+  const urls = new Map();
+
   const pathname = usePathname();
   const [visited, setVisited] = useState<string[]>([]);
   const { isCalling, handleIsCalling } = useActionStore();
-
+  const { setCallBackUrl } = useBranchStore();
   useEffect(() => {
     if (!visited.find((vi) => vi === pathname)) {
       //방문한 route 기록
@@ -16,6 +19,7 @@ export function RouteChangeListener() {
       //프로그래스바 UI
       handleIsCalling(true);
     }
+    setCallBackUrl(pathname);
   }, [pathname]);
 
   return (

@@ -15,17 +15,14 @@ export async function POST(req: Request) {
   }
   // console.log('Received push subscription to add: ', subscription);
 
-  webPush
-    .sendNotification(
-      subscription,
-      JSON.stringify({
-        title: 'Hello Web Push',
-        body: 'Your web push notification is here!',
-      })
-    )
-    .then((response) => {
-      console.log(response);
-    });
+  webPush.sendNotification(
+    subscription,
+    JSON.stringify({
+      title: 'Starbucks',
+      body: '매장에서 주문을 확인중 입니다.',
+      icon: '/logo_starbucks.svg',
+    })
+  );
 
   return Response.json({ status: 200 });
 }

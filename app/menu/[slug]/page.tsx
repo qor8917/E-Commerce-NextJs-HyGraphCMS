@@ -1,9 +1,21 @@
 import Loading from '@/components/startbucks/loading';
 import getCategoryBySlug from '@/hygraph/get-category';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const category = await getCategoryBySlug(params.slug);
 
+  return {
+    title: category.name,
+    description: category.name,
+  };
+}
 export default async function DrinkPage({
   params,
 }: {

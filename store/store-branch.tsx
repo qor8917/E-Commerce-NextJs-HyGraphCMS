@@ -7,8 +7,8 @@ interface State {
   setCurrentBranch: (product: any) => void;
   branchId: string | null;
   setBranchId: (id: string) => void;
-  loaderInstance: any;
-  setLoader: (loader: any) => void;
+  callBackUrl: string[];
+  setCallBackUrl: (url: any) => void;
 }
 
 const useBranchStore = create<State>()(
@@ -24,9 +24,14 @@ const useBranchStore = create<State>()(
       setBranchId: (id: string) => {
         set(() => ({ lineId: id }));
       },
-      loaderInstance: null,
-      setLoader: (loader: any) => {
-        set(() => ({ loaderInstance: loader }));
+      callBackUrl: [],
+      setCallBackUrl: (url: string) => {
+        set(({ callBackUrl }) => {
+          const prev = callBackUrl[callBackUrl.length - 1];
+          return {
+            callBackUrl: [...[prev], url],
+          };
+        });
       },
     })),
     { name: 'branch-storage' }

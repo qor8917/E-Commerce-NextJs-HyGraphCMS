@@ -3,22 +3,19 @@ const sw = /** @type {ServiceWorkerGlobalScope & typeof globalThis} */ (
 );
 sw.addEventListener('push', (event) => {
   const massege = event.data?.json();
-  const { title, body } = massege;
+  const { title, body, icon, image } = massege;
   console.log('Received message: ', massege);
   async function handlePushEvent() {
-    // const windowClients = await sw.clients.matchAll({ type: 'window' });
-    // if (windowClients.length > 0) {
-    //   const appInForeground = windowClients.some((client) => client.focused);
-    //   if (appInForeground) {
-    //     console.log("App is in foreground, don't show notification");
-    //     return;
-    //   }
-    // }
+    const windowClients = await sw.clients.matchAll({ type: 'window' });
+    if (windowClients.length > 0) {
+      windowClients[0].postMessage({ data: 'aaa' });
+    }
 
     await sw.registration.showNotification(title, {
       body,
       renotify: true,
       tag: 'sss',
+      icon,
     });
   }
   event.waitUntil(handlePushEvent());

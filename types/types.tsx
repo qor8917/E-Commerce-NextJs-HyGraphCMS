@@ -14,7 +14,11 @@ export type Collection = {
   slug: string;
   categories: Category[];
 };
-
+export type Customer = {
+  id: string;
+  email: string;
+  password?: string;
+};
 export type Cart = {
   id: string;
   stripeCheckoutId: string;

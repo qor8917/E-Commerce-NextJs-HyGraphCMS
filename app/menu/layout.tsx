@@ -3,7 +3,18 @@ import FloorDrawer from '@/components/startbucks/floor-drawer';
 import Footer from '@/components/startbucks/footer';
 import Loading from '@/components/startbucks/loading';
 import getAllCollections from '@/hygraph/get-all-collections';
+import { Metadata } from 'next';
 import { ReactNode, Suspense } from 'react';
+export async function generateMetadata({
+  params,
+}: {
+  params: { children: ReactNode };
+}): Promise<Metadata> {
+  return {
+    title: 'menu',
+    description: 'menu page',
+  };
+}
 export default async function DrinkPage({ children }: { children: ReactNode }) {
   const collections = await getAllCollections();
 

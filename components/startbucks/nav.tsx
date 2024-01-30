@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import ButtonSignOut from './button-sign-out';
 
-export default function Nav() {
+export default async function Nav() {
   return (
     <>
       <div className=" fixed origin-left-right top-0 w-full z-10 flex h-[5rem]  items-center justify-between bg-white px-4 lg:h-[6.1876rem] lg:px-10  lg:shadow font-bold ">
@@ -62,12 +63,7 @@ export default function Nav() {
               </div>
             </div>
             <div className="ml-12 flex items-center">
-              <Link
-                href="/account/signin"
-                className="block rounded-[3.125rem] border border-solid px-4 py-2 text-center hover:bg-gray-100 "
-              >
-                Sign in
-              </Link>
+              <ButtonSignOut />
               <Link
                 href="/account/create"
                 className="ml-4 block rounded-[3.125rem] border border-solid bg-black px-4 py-2 text-center text-white hover:bg-gray-500"

@@ -5,7 +5,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { loadStripe } from '@stripe/stripe-js';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { retrieveOrder } from './stripe/actions';
 
@@ -42,21 +42,32 @@ export default function ContinueModal() {
   };
   const [active, setActive] = useState(false);
   const closeContinue = () => setActive(false);
+  const openContinue = () => setActive(true);
   const [isShow, setIsShow] = useState(false);
   const [state, FormState] = useFormState(retrieveOrder, null);
   const actionWithVariant = FormState.bind(null, payload);
+
   useEffect(() => {
     if (!isShow) {
       setIsShow(true);
     }
   }, [isShow]);
-  useMemo(async () => {
-    if (!state?.session) return;
-    const stripe = await stripePromise;
 
-    await stripe!.redirectToCheckout({
-      sessionId: state!.session!.id,
-    });
+  useEffect(() => {
+    const continuePayment = async () => {
+      if (state?.status === false) {
+        openContinue();
+        return;
+      }
+      if (!state?.status) {
+        return;
+      }
+      const stripe = await stripePromise;
+      await stripe!.redirectToCheckout({
+        sessionId: state!.session!.id,
+      });
+    };
+    continuePayment();
   }, [state]);
 
   return (

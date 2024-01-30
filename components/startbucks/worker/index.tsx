@@ -5,34 +5,35 @@ import {
   unregisterPushNotifications,
 } from '@/components/startbucks/notifications/push-service';
 import { registerServiceWorker } from '@/utils/service-worker';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function ServiceWorker() {
-  // const [isSubscribed, setIsSubscribed] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState<boolean>();
   // const [subscription, setSubscription] = useState<any>(null);
 
+  async function callPushNotifications(subscription: PushSubscription) {
+    await fetch('/api/notification', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        subscription,
+      }),
+    });
+  }
+
   async function sendPushNotificationEnabled(enabled: boolean) {
-    async function callPushNotifications(subscription: PushSubscription) {
-      await fetch('/api/notification', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          subscription,
-        }),
-      });
-    }
     try {
       if (enabled) {
         const subscription = await registerPushNotifications();
-        // setSubscription(subscription);
         callPushNotifications(subscription);
       } else {
         await unregisterPushNotifications();
       }
+      setIsSubscribed(!!enabled);
 
-      // setIsSubscribed(enabled);
+      if (isSubscribed === undefined) return null;
     } catch (error) {
       if (enabled && Notification.permission === 'denied') {
         alert('Please enable push notifications in your browser settings');
@@ -41,11 +42,29 @@ export default function ServiceWorker() {
       }
     }
   }
+  function askNotificationPermission() {
+    console.log('권한 묻기');
+    // 권한을 실제로 요구하는 함수
+
+    // 브라우저가 알림을 지원하는지 확인
+    if (!('Notification' in window)) {
+      console.log('이 브라우저는 알림을 지원하지 않습니다.');
+    } else {
+      Notification.requestPermission().then((permission) => {
+        if (Notification.permission !== 'denied') {
+          alert('알람을 허용하고 진행사항을 알람 받으세요');
+        } else {
+          alert('알람을 허용했습니다.');
+        }
+      });
+    }
+  }
 
   useEffect(() => {
     async function setUpServiceWorker() {
       try {
         await registerServiceWorker();
+        // askNotificationPermission();
       } catch (error) {
         console.log(error);
       }

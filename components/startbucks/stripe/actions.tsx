@@ -1,15 +1,19 @@
 'use server';
 
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import createCart from '@/hygraph/cart/create-cart';
 import stripeClient from '@/hygraph/stripe-client';
 import { CartItem } from '@/types/types';
+import { getServerSession } from 'next-auth';
 export async function retrieveOrder(
   _currentState: any,
   payload: { lines: CartItem[]; url: string }
 ) {
+  const UserSession = await getServerSession(authOptions);
   const { lines, url } = payload;
-  console.log(url);
+  console.log(UserSession);
   try {
+    if (!UserSession) return { status: false, session: null };
     const session = await stripeClient.checkout.sessions.create({
       line_items: lines.map((line) => {
         const { name, images } = line.merchandise.product;
@@ -74,7 +78,7 @@ export async function retrieveOrder(
     };
     await createCart(variables);
 
-    return { session: session };
+    return { session: session, status: true };
   } catch (error: any) {
     return { error: error.message };
   }

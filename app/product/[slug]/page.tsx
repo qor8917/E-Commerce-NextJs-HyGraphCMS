@@ -1,8 +1,21 @@
 import ProductSelection from '@/components/startbucks/product/product-selelction';
 import TopMenu from '@/components/startbucks/top-menu';
 import getProductBySlug from '@/hygraph/get-product';
+import { Metadata } from 'next';
 import Image from 'next/image';
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const product = await getProductBySlug(params.slug);
+  const { name, description } = product;
 
+  return {
+    title: name,
+    description: description,
+  };
+}
 export default async function ProductPage({
   params,
 }: {
