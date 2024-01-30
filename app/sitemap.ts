@@ -11,6 +11,10 @@ const baseUrl = process.env.NEXT_PUBLIC_SITE_URL
   : 'http://localhost:3000';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const routesMap = ['', 'menu', 'cart', 'store-locator'].map((route) => ({
+    url: `${baseUrl}/${route}`,
+    lastModified: new Date().toISOString(),
+  }));
   const collections: Collection[] = await getAllCollections();
   const categories = collections
     .map((collection) =>
@@ -28,5 +32,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     throw JSON.stringify(error, null, 2);
   }
 
-  return [...fetchedRoutes];
+  return [...routesMap, ...fetchedRoutes];
 }
