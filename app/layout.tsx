@@ -42,6 +42,10 @@ export default async function RootLayout({
         content="/icons/apple-icon-192x192.png"
       ></meta>
       <meta name="theme-color" content="#ffffff"></meta>
+      <meta
+        name="google-site-verification"
+        content="2yOD2LyuAg_i7c1GdvNEiNrJBEGhStb1Epwn2Wc0EOQ"
+      />
       <SessionWrapper>
         <body className="flex flex-col leading selection:bg-seagreen relative">
           <Suspense fallback={<Loading />}>
