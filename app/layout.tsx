@@ -26,41 +26,63 @@ export default async function RootLayout({
 }) {
   return (
     <html lang="en" className={soDoFont.className}>
-      <Script id="google-tag-manager" strategy="afterInteractive">
-        {`
+      <head>
+        <Script id="google-tag-manager" strategy="afterInteractive">
+          {`
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
         j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
         })(window,document,'script','dataLayer','${GTM_ID}');
         `}
-      </Script>
-      <link
-        rel="apple-touch-icon"
-        sizes="192x192"
-        href="/icons/apple-icon-192x192.png"
-      ></link>
-      <link
-        rel="icon"
-        sizes="512x512"
-        href="/icons/apple-icon-512x512.png"
-      ></link>
-      <link rel="manifest" href="/manifest.json"></link>
-      <meta name="msapplication-TileColor" content="#ffffff"></meta>
-      <meta
-        name="msapplication-TileImage"
-        content="/icons/apple-icon-192x192.png"
-      ></meta>
-      <meta name="theme-color" content="#ffffff"></meta>
-      <meta
-        name="google-site-verification"
-        content="2yOD2LyuAg_i7c1GdvNEiNrJBEGhStb1Epwn2Wc0EOQ"
-      />
-      <link rel="icon" href="/favicon.ico" sizes="any" />
-      <div itemScope itemType="https://schema.org/WebSite">
-        <meta itemProp="url" content="https://starbucksdubai.vercel.app" />
-        <meta itemProp="name" content="Starbucks Clone Dubai" />
-      </div>
+        </Script>
+        <link
+          rel="apple-touch-icon"
+          sizes="192x192"
+          href="/icons/apple-icon-192x192.png"
+        ></link>
+        <link
+          rel="icon"
+          sizes="512x512"
+          href="/icons/apple-icon-512x512.png"
+        ></link>
+        <link rel="manifest" href="/manifest.json"></link>
+        <meta name="msapplication-TileColor" content="#ffffff"></meta>
+        <meta
+          name="msapplication-TileImage"
+          content="/icons/apple-icon-192x192.png"
+        ></meta>
+        <meta name="theme-color" content="#ffffff"></meta>
+        <meta
+          name="google-site-verification"
+          content="2yOD2LyuAg_i7c1GdvNEiNrJBEGhStb1Epwn2Wc0EOQ"
+        />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <meta property="og:url" content="https://starbucksdubai.vercel.app/" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Starbucks Clone Dubai" />
+        <meta property="og:description" content="" />
+        <meta
+          property="og:image"
+          content="https://starbucksdubai.vercel.app/logo_starbucks.svg"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="starbucksdubai.vercel.app" />
+        <meta
+          property="twitter:url"
+          content="https://starbucksdubai.vercel.app/"
+        />
+        <meta name="twitter:title" content="Starbucks Clone Dubai" />
+        <meta name="twitter:description" content="" />
+        <meta
+          name="twitter:image"
+          content="https://starbucksdubai.vercel.app/logo_starbucks.svg"
+        />
+        <div itemScope itemType="https://schema.org/WebSite">
+          <meta itemProp="url" content="https://starbucksdubai.vercel.app" />
+          <meta itemProp="name" content="Starbucks Clone Dubai" />
+        </div>
+      </head>
       <SessionWrapper>
         <body className="flex flex-col leading selection:bg-seagreen relative">
           <noscript
