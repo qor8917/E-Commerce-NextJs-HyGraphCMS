@@ -58,7 +58,7 @@ export default async function RootLayout({
       />
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <div itemScope itemType="https://schema.org/WebSite">
-        <meta itemProp="url" content="https://starbucskdubai.vercel.app" />
+        <meta itemProp="url" content="https://starbucksdubai.vercel.app" />
         <meta itemProp="name" content="Starbucks Clone Dubai" />
       </div>
       <SessionWrapper>
