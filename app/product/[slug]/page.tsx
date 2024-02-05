@@ -32,6 +32,15 @@ export default async function ProductPage({
     url: `${process.env.NEXT_PUBLIC_SITE_URL}/product/${params.slug}`,
     image: product.images[0],
     brand: 'Starbucks',
+    offers: [
+      {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'KRW',
+        itemCondition: 'https://schema.org/NewCondition',
+        availability: 'https://schema.org/InStock',
+      },
+    ],
   };
 
   return (
