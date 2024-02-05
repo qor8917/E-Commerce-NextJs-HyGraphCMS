@@ -30,7 +30,7 @@ export default async function ProductPage({
     name: product.name,
     description: product.description,
     url: `${process.env.NEXT_PUBLIC_SITE_URL}/product/${params.slug}`,
-    image: product.images[0],
+    image: product.images[0].url,
     brand: 'Starbucks',
     offers: [
       {
