@@ -23,9 +23,23 @@ export default async function ProductPage({
 }) {
   const product = await getProductBySlug(params.slug);
   const { name, images, description, collection } = product;
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    productID: product.id,
+    name: product.name,
+    description: product.description,
+    url: `${process.env.NEXT_PUBLIC_SITE_URL}/product/${params.slug}`,
+    image: product.images[0],
+    brand: 'Starbucks',
+  };
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="font-sodo-sans  lg:pt-[6.1876rem] pt-[5rem]">
         {/* 탑메뉴 */}
         <TopMenu />

@@ -56,6 +56,11 @@ export default async function RootLayout({
         name="google-site-verification"
         content="2yOD2LyuAg_i7c1GdvNEiNrJBEGhStb1Epwn2Wc0EOQ"
       />
+      <link rel="icon" href="/favicon.ico" sizes="any" />
+      <div itemScope itemType="https://schema.org/WebSite">
+        <meta itemProp="url" content="https://starbucskdubai.vercel.app" />
+        <meta itemProp="name" content="Starbucks Clone Dubai" />
+      </div>
       <SessionWrapper>
         <body className="flex flex-col leading selection:bg-seagreen relative">
           <noscript
