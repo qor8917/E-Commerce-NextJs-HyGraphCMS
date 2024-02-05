@@ -35,7 +35,7 @@ export default async function ProductPage({
     offers: [
       {
         '@type': 'Offer',
-        price: '0',
+        price: product.productSizes[0].price,
         priceCurrency: 'KRW',
         itemCondition: 'https://schema.org/NewCondition',
         availability: 'https://schema.org/InStock',
