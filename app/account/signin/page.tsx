@@ -23,12 +23,12 @@ export default function SignInPage() {
 
   return (
     <>
-      <div className="flex flex-col items-center justify-center gap-y-6 p-4">
-        <div className=" text-2xl p-4 font-bold leading-10">
+      <div className="flex flex-col items-center justify-center gap-y-6 p-4 lg:pt-[6.1876rem] pt-[5rem]">
+        <div className="text-2xl p-4 font-bold leading-10 max-sm:text-base">
           Sign in or create an account
         </div>
-        <div className="w-[31.25rem] rounded-[0.75rem] p-6 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]">
-          <form action="" className="flex flex-col gap-y-2">
+        <div className="w-[31.25rem] max-sm:w-full rounded-[0.75rem] p-6 shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)] ">
+          <form action="" className="flex flex-col gap-y-2 w-full">
             <div className="py-4 text-[1rem]">* indicates required field</div>
             {errorWindow && (
               <div className=" border-2 bg-red-100 text-black p-8 mb-4 border-red-400">
