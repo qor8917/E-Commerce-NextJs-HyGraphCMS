@@ -31,12 +31,12 @@ export default function CollectionsList({
                 href={`/menu/${slug}`}
                 className="flex basis-1/2 cursor-pointer items-center gap-4 text-xl max-md:basis-full"
               >
-                <div className=" overflow-hidden rounded-[50%] min-h-[74px] min-w-[74px]">
+                <div className=" shrink-0 overflow-hidden rounded-[50%] w-[112px] h-[112px]  max-sm:max-w-[74px] max-sm:max-h-[74px]">
                   <Image
                     alt={image.fileName ?? '이미지없음'}
                     src={image.url ?? '/drink_loading.png'}
-                    width={74}
-                    height={74}
+                    width={112}
+                    height={112}
                     placeholder="blur"
                     blurDataURL="/drink_loading.png"
                   />
