@@ -78,11 +78,11 @@ export default async function RootLayout({
           name="twitter:image"
           content="https://starbucksdubai.vercel.app/logo_starbucks.svg"
         />
-        <div itemScope itemType="https://schema.org/WebSite">
-          <meta itemProp="url" content="https://starbucksdubai.vercel.app" />
-          <meta itemProp="name" content="Starbucks Clone Dubai" />
-        </div>
       </head>
+      <div itemScope itemType="https://schema.org/WebSite">
+        <meta itemProp="url" content="https://starbucksdubai.vercel.app" />
+        <meta itemProp="name" content="Starbucks Clone Dubai" />
+      </div>
       <SessionWrapper>
         <body className="flex flex-col leading selection:bg-seagreen relative">
           <noscript

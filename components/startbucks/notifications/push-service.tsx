@@ -7,6 +7,7 @@ export async function getCurrentPushSubscription(): Promise<PushSubscription | n
 
 export async function registerPushNotifications() {
   if (!('PushManager' in window)) {
+    alert('PushManger is not available');
     throw Error('PushManager is not available');
   }
   const existingPushSubscription = await getCurrentPushSubscription();

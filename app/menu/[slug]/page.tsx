@@ -44,12 +44,12 @@ export default async function DrinkPage({
                     href={{ pathname: `/product/${slug}` }}
                     className="flex basis-1/2 cursor-pointer items-center gap-4 text-xl max-md:basis-full"
                   >
-                    <div className=" overflow-hidden rounded-[50%] max-md:h-[74px] max-md:w-[74px]">
+                    <div className=" overflow-hidden rounded-[50%] min-h-[74px] min-w-[74px]">
                       <Image
                         alt={(product.images && images[0]?.fileName) ?? ''}
                         src={(product.images && images[0]?.url) ?? ''}
-                        width={112}
-                        height={112}
+                        width={74}
+                        height={74}
                         placeholder="blur"
                         blurDataURL="/drink_loading.png"
                       />
