@@ -25,7 +25,7 @@ export default async function CartPage() {
         </Link>
         <div className="flex w-full flex-col  items-start justify-center gap-y-2 max-md:gap-y-0">
           <div className="text-2xl font-[700] leading-9 max-md:text-base max-md:leading-4">
-            Review Order &#40; <span>5</span> &#41;
+            {/* Review Order &#40; <span>5</span> &#41; */}Review Order
           </div>
           <div className=" opacity-70 max-md:text-sm">Prep time: 4-9 min</div>
           <Link
