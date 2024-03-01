@@ -4,7 +4,6 @@ import PushMessageListener from '@/components/startbucks/push-message-listener';
 import { RouteChangeListener } from '@/components/startbucks/rotute-change-listener';
 import SessionWrapper from '@/components/startbucks/session-provider';
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import { Suspense } from 'react';
 import { soDoFont } from './fonts';
 import './globals.css';
@@ -27,15 +26,6 @@ export default async function RootLayout({
   return (
     <html lang="en" className={soDoFont.className}>
       <head>
-        <Script id="google-tag-manager" strategy="afterInteractive">
-          {`
-        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','${GTM_ID}');
-        `}
-        </Script>
         <link
           rel="apple-touch-icon"
           sizes="192x192"
@@ -79,17 +69,9 @@ export default async function RootLayout({
           content="https://starbucksdubai.vercel.app/logo_starbucks.svg"
         />
       </head>
-      <div itemScope itemType="https://schema.org/WebSite">
-        <meta itemProp="url" content="https://starbucksdubai.vercel.app" />
-        <meta itemProp="name" content="Starbucks Clone Dubai" />
-      </div>
+
       <SessionWrapper>
         <body className="flex flex-col leading selection:bg-seagreen relative">
-          <noscript
-            dangerouslySetInnerHTML={{
-              __html: `<iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}" height="0" width="0" style="display: none; visibility: hidden;"></iframe>`,
-            }}
-          />
           <Suspense fallback={<Loading />}>
             <RouteChangeListener />
             <PushMessageListener />
