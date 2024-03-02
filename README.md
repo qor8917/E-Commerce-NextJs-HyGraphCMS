@@ -8,6 +8,11 @@ https://dubaibaran.notion.site/244be8014926485182a2bce807cc1ae1?pvs=74
 https://starbucksdubai.vercel.app/
 ### 실제 홈페이지
 https://app.starbucks.com/
+### CMS (컨텐츠 및 에셋 관리)
+Hygraph CMS 플랫폼이용하여 상품의 이미지, 정보, 메뉴 및 카테고리,주문 및 결제 내역, 회원을 관리 하고 있습니다.
+![스크린샷 2024-03-03 오전 2 37 21 2](https://github.com/qor8917/starbucks-clone/assets/69076456/c008ead0-be99-4ee6-acb6-862d0e37c178)
+![스크린샷 2024-03-03 오전 2 38 11 2](https://github.com/qor8917/starbucks-clone/assets/69076456/7b822900-6cd8-49ec-9db5-ce6cfeb7dc04)
+
 ### 사용법
 1. 주문할 매장 선택
 
