@@ -6,8 +6,6 @@
 https://dubaibaran.notion.site/244be8014926485182a2bce807cc1ae1?pvs=74
 ### 배포주소
 https://starbucksdubai.vercel.app/
-### 실제 홈페이지
-https://app.starbucks.com/
 ### CMS (컨텐츠 및 에셋 관리)
 Hygraph CMS 플랫폼이용하여 상품의 이미지, 정보, 메뉴 및 카테고리,주문 및 결제 내역, 회원을 관리 하고 있습니다.
 
